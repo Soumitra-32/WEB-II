@@ -1,4 +1,4 @@
-```jsx
+
 function About() {
     return (
         <div
@@ -36,4 +36,4 @@ function About() {
 }
 
 export default About;
-```
+
