@@ -1,0 +1,40 @@
+name: Azure Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Go to project directory
+        run: cd ~/WEB-II
+
+      - name: Pull latest code
+        run: |
+          cd ~/WEB-II
+          git pull origin main
+
+      - name: Stop old containers
+        run: |
+          cd ~/WEB-II
+          docker compose down
+
+      - name: Build new containers
+        run: |
+          cd ~/WEB-II
+          docker compose build
+
+      - name: Start containers
+        run: |
+          cd ~/WEB-II
+          docker compose up -d
+
+      - name: Remove unused images
+        run: docker image prune -f
+
+      - name: Deployment completed
+        run: echo "Deployment Successful"
