@@ -1,0 +1,222 @@
+name: CI - Build and Test
+
+on:
+  push:
+    branches:
+      - main
+      - development
+
+  pull_request:
+    branches:
+      - main
+      - development
+
+jobs:
+
+  # ==========================================
+  # JOB 1 - BUILD
+  # ==========================================
+
+  build:
+    name: Build Application
+    runs-on:  ubuntu-latest
+
+    steps:
+
+      # ----------------------------------------
+      # Checkout repository
+      # ----------------------------------------
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+
+      # ----------------------------------------
+      # Set up Node.js
+      # ----------------------------------------
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+
+      # ----------------------------------------
+      # Install Backend Dependencies
+      # ----------------------------------------
+
+      - name: Install Backend Dependencies
+        run: |
+          cd backend
+          npm install
+
+
+      # ----------------------------------------
+      # Install Frontend Dependencies
+      # ----------------------------------------
+
+      - name: Install Frontend Dependencies
+        run: |
+          cd frontend
+          npm install
+
+
+      # ----------------------------------------
+      # Build React Frontend
+      # ----------------------------------------
+
+      - name: Build React Frontend
+        run: |
+          cd frontend
+          npm run build
+
+
+      # ----------------------------------------
+      # Set up Docker Buildx
+      # ----------------------------------------
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+
+      # ----------------------------------------
+      # Build Docker Images
+      # ----------------------------------------
+
+      - name: Build Docker Images
+        run: |
+          docker compose build
+
+
+  # ==========================================
+  # JOB 2 - API TESTING
+  # ==========================================
+
+  api-test:
+    name: API Testing
+    needs: build
+    runs-on:  ubuntu-latest
+
+    steps:
+
+      # ----------------------------------------
+      # Checkout repository
+      # ----------------------------------------
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+
+      # ----------------------------------------
+      # Set up Docker Buildx
+      # ----------------------------------------
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+
+      # ----------------------------------------
+      # Build Docker Images
+      # ----------------------------------------
+
+      - name: Build Docker Images
+        run: |
+          docker compose build
+
+
+      # ----------------------------------------
+      # Start Application
+      # ----------------------------------------
+
+      - name: Start Application
+        run: |
+          docker compose up -d
+
+
+      # ----------------------------------------
+      # Wait for Application
+      # ----------------------------------------
+
+      - name: Wait for Application
+        run: |
+          echo "Waiting for containers to start..."
+          sleep 10
+
+
+      # ----------------------------------------
+      # Check Docker Containers
+      # ----------------------------------------
+
+      - name: Check Container Status
+        run: |
+          docker compose ps
+
+
+      # ----------------------------------------
+      # Test Express Backend
+      # ----------------------------------------
+
+      - name: Test Backend
+        run: |
+          curl -f http://localhost:5000
+
+
+      # ----------------------------------------
+      # Test React Frontend
+      # ----------------------------------------
+
+      - name: Test Frontend
+        run: |
+          curl -f http://localhost
+
+
+      # ----------------------------------------
+      # Install Newman
+      # ----------------------------------------
+
+      - name: Install Newman
+        run: |
+          npm install -g newman
+
+
+      # ----------------------------------------
+      # Run ALL Postman Collections
+      # ----------------------------------------
+
+      - name: Run all Postman API Tests
+        run: |
+          collections=(postman/*.json)
+
+          if [ ! -e "${collections[0]}" ]; then
+            echo "No Postman collections found in postman/"
+            exit 1
+          fi
+
+          for collection in "${collections[@]}"; do
+            echo "======================================"
+            echo "Running Postman collection:"
+            echo "$collection"
+            echo "======================================"
+
+            newman run "$collection"
+          done
+
+
+      # ----------------------------------------
+      # Show Docker Logs if Testing Fails
+      # ----------------------------------------
+
+      - name: Show Docker Logs
+        if: failure()
+        run: |
+          docker compose logs
+
+
+      # ----------------------------------------
+      # Stop Containers
+      # ----------------------------------------
+
+      - name: Stop Application
+        if: always()
+        run: |
+          docker compose down

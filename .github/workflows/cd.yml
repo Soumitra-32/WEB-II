@@ -1,0 +1,104 @@
+name: CD - Deploy to Azure
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  deploy:
+    name: Deploy to Azure VM
+    runs-on: self-hosted
+
+    steps:
+
+      # ----------------------------------------
+      # Go to project directory
+      # ----------------------------------------
+
+      - name: Go to project directory
+        run: |
+          cd ~/WEB-II
+          pwd
+
+      # ----------------------------------------
+      # Pull latest code
+      # ----------------------------------------
+
+      - name: Pull latest code
+        run: |
+          cd ~/WEB-II
+          git fetch origin main
+          git checkout main
+          git pull origin main
+
+      # ----------------------------------------
+      # Stop old containers
+      # ----------------------------------------
+
+      - name: Stop old containers
+        run: |
+          cd ~/WEB-II
+          docker compose down
+
+      # ----------------------------------------
+      # Build new containers
+      # ----------------------------------------
+
+      - name: Build new containers
+        run: |
+          cd ~/WEB-II
+          docker compose build
+
+      # ----------------------------------------
+      # Start containers
+      # ----------------------------------------
+
+      - name: Start containers
+        run: |
+          cd ~/WEB-II
+          docker compose up -d
+
+      # ----------------------------------------
+      # Check container status
+      # ----------------------------------------
+
+      - name: Check container status
+        run: |
+          cd ~/WEB-II
+          docker compose ps
+
+      # ----------------------------------------
+      # Test backend
+      # ----------------------------------------
+
+      - name: Test backend
+        run: |
+          curl -f http://localhost:5000
+
+      # ----------------------------------------
+      # Test frontend
+      # ----------------------------------------
+
+      - name: Test frontend
+        run: |
+          curl -f http://localhost
+
+      # ----------------------------------------
+      # Remove unused Docker images
+      # ----------------------------------------
+
+      - name: Remove unused images
+        run: |
+          docker image prune -f
+
+      # ----------------------------------------
+      # Deployment completed
+      # ----------------------------------------
+
+      - name: Deployment completed
+        run: |
+          echo "======================================"
+          echo "Deployment Successful"
+          echo "======================================"
