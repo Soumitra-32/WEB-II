@@ -1,0 +1,2148 @@
+{
+  "info": {
+    "_postman_id": "3ee34481-2dcc-4d4d-b1bb-56dea5809de2",
+    "name": "PokeAPI - 50 Tests",
+    "description": "University API testing lab collection using the public PokéAPI. Contains exactly 50 HTTP requests and exactly 50 Postman pm.test() test cases (one named test per request). No API key is required.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "57175319",
+    "_collection_link": "https://go.postman.co/collection/57175319-3ee34481-2dcc-4d4d-b1bb-56dea5809de2?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "01 Pokemon Requests (15)",
+      "item": [
+        {
+          "name": "01 - GET Pokemon 1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC01 - Pokemon 1 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(1);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/pokemon/1/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "pokemon",
+                "1",
+                ""
+              ]
+            },
+            "description": "Fetch pokemon resource 1 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "02 - GET Pokemon 2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC02 - Pokemon 2 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(2);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/pokemon/2/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "pokemon",
+                "2",
+                ""
+              ]
+            },
+            "description": "Fetch pokemon resource 2 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "03 - GET Pokemon 3",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC03 - Pokemon 3 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(3);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/pokemon/3/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "pokemon",
+                "3",
+                ""
+              ]
+            },
+            "description": "Fetch pokemon resource 3 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "04 - GET Pokemon 4",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC04 - Pokemon 4 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(4);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/pokemon/4/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "pokemon",
+                "4",
+                ""
+              ]
+            },
+            "description": "Fetch pokemon resource 4 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "05 - GET Pokemon 5",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC05 - Pokemon 5 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(5);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/pokemon/5/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "pokemon",
+                "5",
+                ""
+              ]
+            },
+            "description": "Fetch pokemon resource 5 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "06 - GET Pokemon 6",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC06 - Pokemon 6 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(6);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/pokemon/6/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "pokemon",
+                "6",
+                ""
+              ]
+            },
+            "description": "Fetch pokemon resource 6 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "07 - GET Pokemon 7",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC07 - Pokemon 7 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(7);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/pokemon/7/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "pokemon",
+                "7",
+                ""
+              ]
+            },
+            "description": "Fetch pokemon resource 7 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "08 - GET Pokemon 8",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC08 - Pokemon 8 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(8);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/pokemon/8/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "pokemon",
+                "8",
+                ""
+              ]
+            },
+            "description": "Fetch pokemon resource 8 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "09 - GET Pokemon 9",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC09 - Pokemon 9 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(9);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/pokemon/9/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "pokemon",
+                "9",
+                ""
+              ]
+            },
+            "description": "Fetch pokemon resource 9 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "10 - GET Pokemon 10",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC10 - Pokemon 10 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(10);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/pokemon/10/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "pokemon",
+                "10",
+                ""
+              ]
+            },
+            "description": "Fetch pokemon resource 10 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "11 - GET Pokemon 11",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC11 - Pokemon 11 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(11);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/pokemon/11/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "pokemon",
+                "11",
+                ""
+              ]
+            },
+            "description": "Fetch pokemon resource 11 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "12 - GET Pokemon 12",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC12 - Pokemon 12 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(12);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/pokemon/12/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "pokemon",
+                "12",
+                ""
+              ]
+            },
+            "description": "Fetch pokemon resource 12 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "13 - GET Pokemon 13",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC13 - Pokemon 13 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(13);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/pokemon/13/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "pokemon",
+                "13",
+                ""
+              ]
+            },
+            "description": "Fetch pokemon resource 13 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "14 - GET Pokemon 14",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC14 - Pokemon 14 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(14);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/pokemon/14/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "pokemon",
+                "14",
+                ""
+              ]
+            },
+            "description": "Fetch pokemon resource 14 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "15 - GET Pokemon 15",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC15 - Pokemon 15 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(15);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/pokemon/15/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "pokemon",
+                "15",
+                ""
+              ]
+            },
+            "description": "Fetch pokemon resource 15 from the public PokéAPI."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "02 Ability Requests (10)",
+      "item": [
+        {
+          "name": "16 - GET Ability 1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC16 - Ability 1 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(1);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/ability/1/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "ability",
+                "1",
+                ""
+              ]
+            },
+            "description": "Fetch ability resource 1 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "17 - GET Ability 2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC17 - Ability 2 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(2);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/ability/2/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "ability",
+                "2",
+                ""
+              ]
+            },
+            "description": "Fetch ability resource 2 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "18 - GET Ability 3",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC18 - Ability 3 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(3);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/ability/3/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "ability",
+                "3",
+                ""
+              ]
+            },
+            "description": "Fetch ability resource 3 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "19 - GET Ability 4",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC19 - Ability 4 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(4);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/ability/4/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "ability",
+                "4",
+                ""
+              ]
+            },
+            "description": "Fetch ability resource 4 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "20 - GET Ability 5",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC20 - Ability 5 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(5);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/ability/5/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "ability",
+                "5",
+                ""
+              ]
+            },
+            "description": "Fetch ability resource 5 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "21 - GET Ability 6",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC21 - Ability 6 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(6);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/ability/6/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "ability",
+                "6",
+                ""
+              ]
+            },
+            "description": "Fetch ability resource 6 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "22 - GET Ability 7",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC22 - Ability 7 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(7);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/ability/7/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "ability",
+                "7",
+                ""
+              ]
+            },
+            "description": "Fetch ability resource 7 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "23 - GET Ability 8",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC23 - Ability 8 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(8);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/ability/8/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "ability",
+                "8",
+                ""
+              ]
+            },
+            "description": "Fetch ability resource 8 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "24 - GET Ability 9",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC24 - Ability 9 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(9);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/ability/9/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "ability",
+                "9",
+                ""
+              ]
+            },
+            "description": "Fetch ability resource 9 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "25 - GET Ability 10",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC25 - Ability 10 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(10);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/ability/10/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "ability",
+                "10",
+                ""
+              ]
+            },
+            "description": "Fetch ability resource 10 from the public PokéAPI."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "03 Move Requests (10)",
+      "item": [
+        {
+          "name": "26 - GET Move 1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC26 - Move 1 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(1);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/move/1/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "move",
+                "1",
+                ""
+              ]
+            },
+            "description": "Fetch move resource 1 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "27 - GET Move 2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC27 - Move 2 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(2);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/move/2/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "move",
+                "2",
+                ""
+              ]
+            },
+            "description": "Fetch move resource 2 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "28 - GET Move 3",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC28 - Move 3 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(3);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/move/3/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "move",
+                "3",
+                ""
+              ]
+            },
+            "description": "Fetch move resource 3 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "29 - GET Move 4",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC29 - Move 4 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(4);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/move/4/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "move",
+                "4",
+                ""
+              ]
+            },
+            "description": "Fetch move resource 4 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "30 - GET Move 5",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC30 - Move 5 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(5);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/move/5/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "move",
+                "5",
+                ""
+              ]
+            },
+            "description": "Fetch move resource 5 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "31 - GET Move 6",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC31 - Move 6 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(6);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/move/6/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "move",
+                "6",
+                ""
+              ]
+            },
+            "description": "Fetch move resource 6 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "32 - GET Move 7",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC32 - Move 7 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(7);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/move/7/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "move",
+                "7",
+                ""
+              ]
+            },
+            "description": "Fetch move resource 7 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "33 - GET Move 8",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC33 - Move 8 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(8);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/move/8/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "move",
+                "8",
+                ""
+              ]
+            },
+            "description": "Fetch move resource 8 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "34 - GET Move 9",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC34 - Move 9 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(9);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/move/9/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "move",
+                "9",
+                ""
+              ]
+            },
+            "description": "Fetch move resource 9 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "35 - GET Move 10",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC35 - Move 10 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(10);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/move/10/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "move",
+                "10",
+                ""
+              ]
+            },
+            "description": "Fetch move resource 10 from the public PokéAPI."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "04 Type Requests (5)",
+      "item": [
+        {
+          "name": "36 - GET Type 1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC36 - Type 1 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(1);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/type/1/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "type",
+                "1",
+                ""
+              ]
+            },
+            "description": "Fetch type resource 1 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "37 - GET Type 2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC37 - Type 2 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(2);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/type/2/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "type",
+                "2",
+                ""
+              ]
+            },
+            "description": "Fetch type resource 2 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "38 - GET Type 3",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC38 - Type 3 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(3);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/type/3/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "type",
+                "3",
+                ""
+              ]
+            },
+            "description": "Fetch type resource 3 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "39 - GET Type 4",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC39 - Type 4 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(4);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/type/4/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "type",
+                "4",
+                ""
+              ]
+            },
+            "description": "Fetch type resource 4 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "40 - GET Type 5",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC40 - Type 5 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(5);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/type/5/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "type",
+                "5",
+                ""
+              ]
+            },
+            "description": "Fetch type resource 5 from the public PokéAPI."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "05 Berry Requests (5)",
+      "item": [
+        {
+          "name": "41 - GET Berry 1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC41 - Berry 1 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(1);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/berry/1/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "berry",
+                "1",
+                ""
+              ]
+            },
+            "description": "Fetch berry resource 1 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "42 - GET Berry 2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC42 - Berry 2 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(2);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/berry/2/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "berry",
+                "2",
+                ""
+              ]
+            },
+            "description": "Fetch berry resource 2 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "43 - GET Berry 3",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC43 - Berry 3 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(3);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/berry/3/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "berry",
+                "3",
+                ""
+              ]
+            },
+            "description": "Fetch berry resource 3 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "44 - GET Berry 4",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC44 - Berry 4 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(4);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/berry/4/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "berry",
+                "4",
+                ""
+              ]
+            },
+            "description": "Fetch berry resource 4 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "45 - GET Berry 5",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC45 - Berry 5 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(5);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/berry/5/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "berry",
+                "5",
+                ""
+              ]
+            },
+            "description": "Fetch berry resource 5 from the public PokéAPI."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "06 Generation Requests (5)",
+      "item": [
+        {
+          "name": "46 - GET Generation 1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC46 - Generation 1 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(1);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/generation/1/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "generation",
+                "1",
+                ""
+              ]
+            },
+            "description": "Fetch generation resource 1 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "47 - GET Generation 2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC47 - Generation 2 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(2);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/generation/2/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "generation",
+                "2",
+                ""
+              ]
+            },
+            "description": "Fetch generation resource 2 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "48 - GET Generation 3",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC48 - Generation 3 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(3);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/generation/3/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "generation",
+                "3",
+                ""
+              ]
+            },
+            "description": "Fetch generation resource 3 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "49 - GET Generation 4",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC49 - Generation 4 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(4);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/generation/4/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "generation",
+                "4",
+                ""
+              ]
+            },
+            "description": "Fetch generation resource 4 from the public PokéAPI."
+          },
+          "response": []
+        },
+        {
+          "name": "50 - GET Generation 5",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC50 - Generation 5 returns correct resource\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.id).to.eql(5);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pokeApiBaseUrl}}/generation/5/",
+              "host": [
+                "{{pokeApiBaseUrl}}"
+              ],
+              "path": [
+                "generation",
+                "5",
+                ""
+              ]
+            },
+            "description": "Fetch generation resource 5 from the public PokéAPI."
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "pokeApiBaseUrl",
+      "value": "https://pokeapi.co/api/v2"
+    }
+  ]
+}
