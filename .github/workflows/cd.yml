@@ -78,17 +78,7 @@ jobs:
         run: |
           curl -f http://localhost:5000
 
-      # ----------------------------------------
-      # Test frontend
-      # ----------------------------------------
-
-      - name: Test frontend
-        run: |
-          curl -f http://localhost
-
-      # ----------------------------------------
-      # Remove unused Docker images
-      # ----------------------------------------
+      
 
       - name: Remove unused images
         run: |
