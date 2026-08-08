@@ -1,0 +1,1839 @@
+{
+  "info": {
+    "_postman_id": "f2a371b2-5fd8-4810-9a08-4d9b8e47f836",
+    "name": "JSONPlaceholder API - 50 Requests Lab",
+    "description": "Auto-generated Postman collection with 50 requests and 50+ test scripts against https://jsonplaceholder.typicode.com for the Postman/Newman/CI-CD lab.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. GET All (Smoke Tests)",
+      "item": [
+        {
+          "name": "GET all posts",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Array response is not empty', function () { const jsonData = pm.response.json(); pm.expect(jsonData.length).to.be.above(0); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/posts",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET all comments",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Array response is not empty', function () { const jsonData = pm.response.json(); pm.expect(jsonData.length).to.be.above(0); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/comments",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "comments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET all albums",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Array response is not empty', function () { const jsonData = pm.response.json(); pm.expect(jsonData.length).to.be.above(0); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/albums",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "albums"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET all photos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Array response is not empty', function () { const jsonData = pm.response.json(); pm.expect(jsonData.length).to.be.above(0); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/photos",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "photos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET all todos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Array response is not empty', function () { const jsonData = pm.response.json(); pm.expect(jsonData.length).to.be.above(0); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/todos",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "todos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET all users",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Array response is not empty', function () { const jsonData = pm.response.json(); pm.expect(jsonData.length).to.be.above(0); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/users",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2. GET By ID",
+      "item": [
+        {
+          "name": "GET post by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 1000ms', function () { pm.expect(pm.response.responseTime).to.be.below(1000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Response has \"id\" field', function () { const jsonData = pm.response.json(); if (Array.isArray(jsonData)) { pm.expect(jsonData[0]).to.have.property('id'); } else { pm.expect(jsonData).to.have.property('id'); } });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/posts/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET comment by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 1000ms', function () { pm.expect(pm.response.responseTime).to.be.below(1000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Response has \"id\" field', function () { const jsonData = pm.response.json(); if (Array.isArray(jsonData)) { pm.expect(jsonData[0]).to.have.property('id'); } else { pm.expect(jsonData).to.have.property('id'); } });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/comments/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "comments",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET album by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 1000ms', function () { pm.expect(pm.response.responseTime).to.be.below(1000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Response has \"id\" field', function () { const jsonData = pm.response.json(); if (Array.isArray(jsonData)) { pm.expect(jsonData[0]).to.have.property('id'); } else { pm.expect(jsonData).to.have.property('id'); } });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/albums/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "albums",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET photo by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 1000ms', function () { pm.expect(pm.response.responseTime).to.be.below(1000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Response has \"id\" field', function () { const jsonData = pm.response.json(); if (Array.isArray(jsonData)) { pm.expect(jsonData[0]).to.have.property('id'); } else { pm.expect(jsonData).to.have.property('id'); } });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/photos/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "photos",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET todo by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 1000ms', function () { pm.expect(pm.response.responseTime).to.be.below(1000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Response has \"id\" field', function () { const jsonData = pm.response.json(); if (Array.isArray(jsonData)) { pm.expect(jsonData[0]).to.have.property('id'); } else { pm.expect(jsonData).to.have.property('id'); } });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/todos/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "todos",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET user by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 1000ms', function () { pm.expect(pm.response.responseTime).to.be.below(1000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Response has \"id\" field', function () { const jsonData = pm.response.json(); if (Array.isArray(jsonData)) { pm.expect(jsonData[0]).to.have.property('id'); } else { pm.expect(jsonData).to.have.property('id'); } });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/users/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "users",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3. POST Create",
+      "item": [
+        {
+          "name": "POST create post",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Response has \"id\" field', function () { const jsonData = pm.response.json(); if (Array.isArray(jsonData)) { pm.expect(jsonData[0]).to.have.property('id'); } else { pm.expect(jsonData).to.have.property('id'); } });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/posts",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "posts"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"foo\",\n  \"body\": \"bar\",\n  \"userId\": 1\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST create comment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Response has \"id\" field', function () { const jsonData = pm.response.json(); if (Array.isArray(jsonData)) { pm.expect(jsonData[0]).to.have.property('id'); } else { pm.expect(jsonData).to.have.property('id'); } });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/comments",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "comments"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"postId\": 1,\n  \"name\": \"foo\",\n  \"email\": \"foo@bar.com\",\n  \"body\": \"bar\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST create album",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Response has \"id\" field', function () { const jsonData = pm.response.json(); if (Array.isArray(jsonData)) { pm.expect(jsonData[0]).to.have.property('id'); } else { pm.expect(jsonData).to.have.property('id'); } });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/albums",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "albums"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 1,\n  \"title\": \"foo\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST create photo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Response has \"id\" field', function () { const jsonData = pm.response.json(); if (Array.isArray(jsonData)) { pm.expect(jsonData[0]).to.have.property('id'); } else { pm.expect(jsonData).to.have.property('id'); } });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/photos",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "photos"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"albumId\": 1,\n  \"title\": \"foo\",\n  \"url\": \"https://via.placeholder.com/600\",\n  \"thumbnailUrl\": \"https://via.placeholder.com/150\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST create todo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Response has \"id\" field', function () { const jsonData = pm.response.json(); if (Array.isArray(jsonData)) { pm.expect(jsonData[0]).to.have.property('id'); } else { pm.expect(jsonData).to.have.property('id'); } });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/todos",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "todos"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 1,\n  \"title\": \"foo\",\n  \"completed\": false\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST create user",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Response has \"id\" field', function () { const jsonData = pm.response.json(); if (Array.isArray(jsonData)) { pm.expect(jsonData[0]).to.have.property('id'); } else { pm.expect(jsonData).to.have.property('id'); } });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/users",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"foo\",\n  \"username\": \"foobar\",\n  \"email\": \"foo@bar.com\"\n}"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "4. PUT Update",
+      "item": [
+        {
+          "name": "PUT update post",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/posts/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"foo\",\n  \"body\": \"bar\",\n  \"userId\": 1,\n  \"id\": 1\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT update comment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/comments/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "comments",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"postId\": 1,\n  \"name\": \"foo\",\n  \"email\": \"foo@bar.com\",\n  \"body\": \"bar\",\n  \"id\": 1\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT update album",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/albums/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "albums",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 1,\n  \"title\": \"foo\",\n  \"id\": 1\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT update photo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/photos/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "photos",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"albumId\": 1,\n  \"title\": \"foo\",\n  \"url\": \"https://via.placeholder.com/600\",\n  \"thumbnailUrl\": \"https://via.placeholder.com/150\",\n  \"id\": 1\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT update todo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/todos/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "todos",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 1,\n  \"title\": \"foo\",\n  \"completed\": false,\n  \"id\": 1\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT update user",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/users/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "users",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"foo\",\n  \"username\": \"foobar\",\n  \"email\": \"foo@bar.com\",\n  \"id\": 1\n}"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "5. PATCH Update",
+      "item": [
+        {
+          "name": "PATCH partial update post",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/posts/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"updated title\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH partial update comment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/comments/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "comments",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"updated name\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH partial update album",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/albums/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "albums",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"updated title\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH partial update photo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/photos/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "photos",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"updated title\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH partial update todo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/todos/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "todos",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"completed\": true\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH partial update user",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/users/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "users",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"updated name\"\n}"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "6. DELETE",
+      "item": [
+        {
+          "name": "DELETE post",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 1500ms', function () { pm.expect(pm.response.responseTime).to.be.below(1500); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/posts/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE comment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 1500ms', function () { pm.expect(pm.response.responseTime).to.be.below(1500); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/comments/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "comments",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE album",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 1500ms', function () { pm.expect(pm.response.responseTime).to.be.below(1500); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/albums/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "albums",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE photo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 1500ms', function () { pm.expect(pm.response.responseTime).to.be.below(1500); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/photos/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "photos",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE todo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 1500ms', function () { pm.expect(pm.response.responseTime).to.be.below(1500); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/todos/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "todos",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE user",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 1500ms', function () { pm.expect(pm.response.responseTime).to.be.below(1500); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/users/1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "users",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "7. Negative Tests (Invalid ID)",
+      "item": [
+        {
+          "name": "GET post - invalid ID (negative test)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('Response time is below 1000ms', function () { pm.expect(pm.response.responseTime).to.be.below(1000); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/posts/999999",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "posts",
+                "999999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET comment - invalid ID (negative test)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('Response time is below 1000ms', function () { pm.expect(pm.response.responseTime).to.be.below(1000); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/comments/999999",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "comments",
+                "999999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET album - invalid ID (negative test)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('Response time is below 1000ms', function () { pm.expect(pm.response.responseTime).to.be.below(1000); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/albums/999999",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "albums",
+                "999999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET photo - invalid ID (negative test)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('Response time is below 1000ms', function () { pm.expect(pm.response.responseTime).to.be.below(1000); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/photos/999999",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "photos",
+                "999999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET todo - invalid ID (negative test)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('Response time is below 1000ms', function () { pm.expect(pm.response.responseTime).to.be.below(1000); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/todos/999999",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "todos",
+                "999999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET user - invalid ID (negative test)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('Response time is below 1000ms', function () { pm.expect(pm.response.responseTime).to.be.below(1000); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/users/999999",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "users",
+                "999999"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "8. Nested Resources",
+      "item": [
+        {
+          "name": "GET comments for a post (nested)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Array response is not empty', function () { const jsonData = pm.response.json(); pm.expect(jsonData.length).to.be.above(0); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/posts/1/comments",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "posts",
+                "1",
+                "comments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET photos for an album (nested)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Array response is not empty', function () { const jsonData = pm.response.json(); pm.expect(jsonData.length).to.be.above(0); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/albums/1/photos",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "albums",
+                "1",
+                "photos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET albums for a user (nested)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Array response is not empty', function () { const jsonData = pm.response.json(); pm.expect(jsonData.length).to.be.above(0); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/users/1/albums",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "users",
+                "1",
+                "albums"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET posts for a user (nested)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Array response is not empty', function () { const jsonData = pm.response.json(); pm.expect(jsonData.length).to.be.above(0); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/users/1/posts",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "users",
+                "1",
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET todos for a user (nested)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Array response is not empty', function () { const jsonData = pm.response.json(); pm.expect(jsonData.length).to.be.above(0); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/users/1/todos",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "users",
+                "1",
+                "todos"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "9. Query Param Filters",
+      "item": [
+        {
+          "name": "GET posts filtered by userId",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Array response is not empty', function () { const jsonData = pm.response.json(); pm.expect(jsonData.length).to.be.above(0); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/posts?userId=1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET comments filtered by postId",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Array response is not empty', function () { const jsonData = pm.response.json(); pm.expect(jsonData.length).to.be.above(0); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/comments?postId=1",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "comments"
+              ],
+              "query": [
+                {
+                  "key": "postId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET todos filtered by completed=true",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Auto-generated assertions",
+                  "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Response time is below 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+                  "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+                  "pm.test('Array response is not empty', function () { const jsonData = pm.response.json(); pm.expect(jsonData.length).to.be.above(0); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/todos?completed=true",
+              "host": [
+                "https://jsonplaceholder.typicode.com"
+              ],
+              "path": [
+                "todos"
+              ],
+              "query": [
+                {
+                  "key": "completed",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
