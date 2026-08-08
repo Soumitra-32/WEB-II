@@ -1967,8 +1967,8 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
+                  "pm.test(\"Status code is 700\", function () {\r",
+                  "    pm.response.to.have.status(700);\r",
                   "});\r",
                   "\r",
                   "pm.test(\"Content-Type header exists\", function () {\r",
@@ -2009,8 +2009,8 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
+                  "pm.test(\"Status code is 700\", function () {\r",
+                  "    pm.response.to.have.status(700);\r",
                   "});\r",
                   "\r",
                   "pm.test(\"Server header exists\", function () {\r",
@@ -2052,8 +2052,8 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
+                  "pm.test(\"Status code is 700\", function () {\r",
+                  "    pm.response.to.have.status(700);\r",
                   "});\r",
                   "\r",
                   "pm.test(\"Response time below 3500 ms\", function () {\r",
