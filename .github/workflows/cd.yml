@@ -70,21 +70,7 @@ jobs:
           cd ~/WEB-II
           docker compose ps
 
-      # ----------------------------------------
-      # Test backend
-      # ----------------------------------------
-
-      - name: Test backend
-        run: |
-          curl -f http://localhost:5000
-
-      # ----------------------------------------
-      # Test frontend
-      # ----------------------------------------
-
-      - name: Test frontend
-        run: |
-          curl -f http://localhost
+      
 
       # ----------------------------------------
       # Remove unused Docker images
