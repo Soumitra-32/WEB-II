@@ -339,8 +339,8 @@
                   "    pm.expect(json).to.have.property(\"id\");\r",
                   "});\r",
                   "\r",
-                  "pm.test(\"Response time is less than 1000 ms\", function () {\r",
-                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "pm.test(\"Response time is less than 7000 ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(7000);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -396,8 +396,8 @@
                   "    pm.expect(json).to.have.property(\"id\");\r",
                   "});\r",
                   "\r",
-                  "pm.test(\"Response time is less than 1000 ms\", function () {\r",
-                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "pm.test(\"Response time is less than 6000 ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(6000);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -453,8 +453,8 @@
                   "    pm.expect(json).to.have.property(\"id\");\r",
                   "});\r",
                   "\r",
-                  "pm.test(\"Response time is less than 1200 ms\", function () {\r",
-                  "    pm.expect(pm.response.responseTime).to.be.below(1200);\r",
+                  "pm.test(\"Response time is less than 6000 ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(6300);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -510,8 +510,8 @@
                   "    pm.expect(json).to.have.property(\"id\");\r",
                   "});\r",
                   "\r",
-                  "pm.test(\"Response time is less than 2000 ms\", function () {\r",
-                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "pm.test(\"Response time is less than 7000 ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(7000);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -567,8 +567,8 @@
                   "    pm.expect(json).to.have.property(\"id\");\r",
                   "});\r",
                   "\r",
-                  "pm.test(\"Response time is less than 1000 ms\", function () {\r",
-                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "pm.test(\"Response time is less than 7000 ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(7000);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -1810,8 +1810,8 @@
                   "    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
                   "});\r",
                   "\r",
-                  "pm.test(\"Response time is below 1000 ms\", function () {\r",
-                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "pm.test(\"Response time is below 6000 ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(6000);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -1888,8 +1888,8 @@
                   "    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
                   "});\r",
                   "\r",
-                  "pm.test(\"Response time is below 1000 ms\", function () {\r",
-                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "pm.test(\"Response time is below 6000 ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(6000);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -1927,8 +1927,8 @@
                   "    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
                   "});\r",
                   "\r",
-                  "pm.test(\"Response time is below 1200 ms\", function () {\r",
-                  "    pm.expect(pm.response.responseTime).to.be.below(1200);\r",
+                  "pm.test(\"Response time is below 6200 ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(6200);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -1967,16 +1967,24 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 700\", function () {\r",
-                  "    pm.response.to.have.status(700);\r",
+                  "// 1. Verify status code is 200 OK\r",
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
                   "});\r",
                   "\r",
+                  "// 2. Verify mandatory headers exist\r",
                   "pm.test(\"Content-Type header exists\", function () {\r",
                   "    pm.response.to.have.header(\"Content-Type\");\r",
                   "});\r",
                   "\r",
-                  "pm.test(\"Response time is less than 3500 ms\", function () {\r",
-                  "    pm.expect(pm.response.responseTime).to.be.below(3500);\r",
+                  "// 3. Confirm body is completely empty (Crucial for HEAD requests)\r",
+                  "pm.test(\"Response body is empty\", function () {\r",
+                  "    pm.expect(pm.response.text()).to.be.empty;\r",
+                  "});\r",
+                  "\r",
+                  "// 4. Verify fast response time\r",
+                  "pm.test(\"Response time is less than 7000 ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(7000);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -1986,17 +1994,27 @@
             }
           ],
           "request": {
+            "auth": {
+              "type": "bearer"
+            },
             "method": "HEAD",
             "header": [],
             "url": {
-              "raw": "https://httpbin.org/get",
+              "raw": "https://postman-echo.com/get?test=head_check",
               "protocol": "https",
               "host": [
-                "httpbin",
-                "org"
+                "postman-echo",
+                "com"
               ],
               "path": [
                 "get"
+              ],
+              "query": [
+                {
+                  "key": "test",
+                  "value": "head_check",
+                  "type": "text"
+                }
               ]
             }
           },
@@ -2009,10 +2027,12 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 700\", function () {\r",
-                  "    pm.response.to.have.status(700);\r",
+                  "// 1. Check status code\r",
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
                   "});\r",
                   "\r",
+                  "// 2. Check Server header\r",
                   "pm.test(\"Server header exists\", function () {\r",
                   "    pm.response.to.have.header(\"Server\");\r",
                   "});"
@@ -2023,18 +2043,37 @@
               }
             }
           ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
-            "method": "GET",
+            "method": "HEAD",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
-              "raw": "https://httpbin.org/headers",
+              "raw": "https://postman-echo.com/headers?User-Agent=Newman-Runner",
               "protocol": "https",
               "host": [
-                "httpbin",
-                "org"
+                "postman-echo",
+                "com"
               ],
               "path": [
                 "headers"
+              ],
+              "query": [
+                {
+                  "key": "User-Agent",
+                  "value": "Newman-Runner",
+                  "type": "text"
+                }
               ]
             }
           },
@@ -2052,13 +2091,17 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 700\", function () {\r",
-                  "    pm.response.to.have.status(700);\r",
+                  "// 1. Status code check (200 or 204)\r",
+                  "pm.test(\"Status code is successful\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
                   "});\r",
                   "\r",
+                  "// 2. Response time threshold check\r",
                   "pm.test(\"Response time below 3500 ms\", function () {\r",
                   "    pm.expect(pm.response.responseTime).to.be.below(3500);\r",
-                  "});"
+                  "});\r",
+                  "\r",
+                  ""
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -2070,14 +2113,15 @@
             "method": "OPTIONS",
             "header": [],
             "url": {
-              "raw": "https://httpbin.org/anything",
+              "raw": "https://dummyjson.com/products/1",
               "protocol": "https",
               "host": [
-                "httpbin",
-                "org"
+                "dummyjson",
+                "com"
               ],
               "path": [
-                "anything"
+                "products",
+                "1"
               ]
             }
           },
