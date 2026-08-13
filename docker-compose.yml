@@ -64,4 +64,4 @@ volumes:
 
 networks:
   web-network:
-    driver: bridgeS
+    driver: bridge
