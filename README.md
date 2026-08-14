@@ -1,63 +1,90 @@
 # WEB-II
 
-A full-stack web application developed as part of the **Web Engineering-II** course. This project demonstrates a modern DevOps workflow using React, Express, Docker, GitHub Actions, and Microsoft Azure Virtual Machine.
+A full-stack web application developed as part of the **Web Engineering-II** course at the **Department of Computer Science and Engineering, Jahangirnagar University**.
+
+The project demonstrates modern web application development and deployment using **React, Express.js, MongoDB, Docker, GitHub Actions, and Microsoft Azure**.
 
 ---
 
 ## Project Overview
 
-The goal of this project is to build a production-ready web application while learning industry-standard development and deployment practices.
+The project is a **University Bus Seat Booking System** designed to provide a structured platform for managing university bus-related information and seat bookings.
 
-The project currently includes:
+The application follows a full-stack architecture with a React frontend, Express.js backend, MongoDB database, and Docker-based deployment.
 
-- React Frontend
-- Express.js Backend
-- Docker Containerization
-- Docker Compose
-- Git Version Control
-- GitHub Repository
-- GitHub Actions CI/CD
-- GitHub Self-Hosted Runner
-- Microsoft Azure Virtual Machine Deployment
-
-Future updates will include:
-
-- MySQL Database Integration
-- Nginx Reverse Proxy
-- HTTPS with SSL
-- Custom Domain
-- Production Deployment
+The project also implements a CI/CD workflow using GitHub Actions and a self-hosted runner deployed on a Microsoft Azure Virtual Machine.
 
 ---
 
 ## Technology Stack
 
-| Category | Technology |
-|----------|------------|
-| Frontend | React.js |
-| Backend | Express.js |
-| Runtime | Node.js |
-| Language | JavaScript |
-| Package Manager | npm |
-| Version Control | Git |
-| Repository | GitHub |
-| Containerization | Docker |
-| Container Orchestration | Docker Compose |
-| CI/CD | GitHub Actions |
+| Category          | Technology                |
+| ----------------- | ------------------------- |
+| Frontend          | React.js                  |
+| Backend           | Express.js                |
+| Runtime           | Node.js                   |
+| Language          | JavaScript                |
+| Database          | MongoDB                   |
+| Database Driver   | Mongoose                  |
+| API               | REST API                  |
+| API Testing       | Postman                   |
+| Version Control   | Git                       |
+| Repository        | GitHub                    |
+| Containerization  | Docker                    |
+| Orchestration     | Docker Compose            |
+| CI/CD             | GitHub Actions            |
 | Deployment Runner | GitHub Self-Hosted Runner |
-| Cloud Platform | Microsoft Azure Virtual Machine |
-| Operating System | Ubuntu Server 24.04 LTS |
-| Development Environment | Windows 11 |
-| Code Editor | Visual Studio Code |
+| Cloud Platform    | Microsoft Azure           |
+| Server OS         | Ubuntu Server             |
+| Development OS    | Windows 11                |
+| Code Editor       | Visual Studio Code        |
+
+---
+
+## Architecture
+
+```text
+                    Developer Laptop
+                       Windows 11
+                           │
+                       Git Push
+                           │
+                           ▼
+                  ┌─────────────────┐
+                  │     GitHub      │
+                  │   WEB-II Repo   │
+                  └────────┬────────┘
+                           │
+                    GitHub Actions
+                           │
+                           ▼
+                ┌─────────────────────┐
+                │ Self-Hosted Runner  │
+                │      Azure VM       │
+                └──────────┬──────────┘
+                           │
+                    Docker Compose
+                           │
+              ┌────────────┼────────────┐
+              │            │            │
+              ▼            ▼            ▼
+           React       Express.js    MongoDB
+         Frontend       Backend      Database
+          :3000          :5000
+```
 
 ---
 
 ## Project Structure
 
-```
+```text
 WEB-II/
 │
 ├── backend/
+│   ├── config/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
 │   ├── server.js
 │   ├── package.json
 │   ├── Dockerfile
@@ -81,217 +108,148 @@ WEB-II/
 
 ---
 
-## Features
+## Backend Architecture
 
-- React frontend
-- Express REST API
-- Dockerized frontend
-- Dockerized backend
-- Docker Compose support
-- GitHub version control
-- Automated deployment using GitHub Actions
-- Azure Virtual Machine deployment
-- Self-hosted GitHub Actions Runner
+The Express.js backend follows the **MVC architecture** to maintain a clean separation of responsibilities.
 
----
+### Model
 
-## System Architecture
+Defines the MongoDB data structures using Mongoose and handles database-related operations.
 
-```
-                GitHub Repository
-                        │
-                        ▼
-              GitHub Actions Workflow
-                        │
-                        ▼
-          Self-Hosted Runner (Azure VM)
-                        │
-                git pull latest code
-                        │
-                        ▼
-           docker compose up --build
-                        │
-        ┌───────────────┴───────────────┐
-        │                               │
-        ▼                               ▼
- React Frontend                 Express Backend
-   Port 3000                      Port 5000
-```
+### Controller
+
+Contains the application logic for processing requests and generating responses.
+
+### Routes
+
+Defines the REST API endpoints and connects them with the appropriate controllers.
+
+### Configuration
+
+Contains application and database configuration required by the backend.
+
+This structure makes the backend easier to maintain, test, and extend.
 
 ---
 
-## Running the Project Locally
+## Database
 
-### Clone Repository
+The application uses **MongoDB** as its database.
 
-```bash
-git clone https://github.com/Soumitra-32/WEB-II.git
-```
+MongoDB is integrated with the Express.js backend through **Mongoose**.
 
-```bash
-cd WEB-II
-```
+The database is containerized as part of the Docker Compose environment, allowing the frontend, backend, and database to run as separate services.
 
 ---
 
-### Backend
+## Core Features
 
-```bash
-cd backend
-npm install
-npm start
-```
-
-Backend runs on:
-
-```
-http://localhost:5000
-```
-
----
-
-### Frontend
-
-```bash
-cd frontend
-npm install
-npm start
-```
-
-Frontend runs on:
-
-```
-http://localhost:3000
-```
+* React-based frontend
+* Express.js REST API
+* MongoDB database
+* Mongoose integration
+* MVC backend architecture
+* Models and controllers
+* REST API routes
+* CRUD operations
+* Dockerized frontend
+* Dockerized backend
+* Dockerized MongoDB
+* Docker Compose orchestration
+* GitHub version control
+* GitHub Actions CI/CD
+* GitHub Self-Hosted Runner
+* Microsoft Azure VM deployment
+* Postman API testing
 
 ---
 
-## Running with Docker
+## CI/CD and Deployment
 
-Build containers
+The project uses **GitHub Actions** with a **self-hosted runner** installed on the Azure Virtual Machine.
 
-```bash
-docker compose build
+The deployment workflow is:
+
+```text
+Developer
+    │
+    │ git push
+    ▼
+GitHub Repository
+    │
+    │ GitHub Actions
+    ▼
+Azure VM Self-Hosted Runner
+    │
+    │ Pull latest source
+    ▼
+Docker Compose
+    │
+    ├── React Frontend
+    ├── Express Backend
+    └── MongoDB
 ```
 
-Run containers
+The development and deployment workflow follows two environments:
 
-```bash
-docker compose up -d
-```
+**Development Environment**
 
-Stop containers
+Windows 11 laptop where project files are developed and updated.
 
-```bash
-docker compose down
-```
+**Deployment Environment**
+
+Ubuntu Server running on a Microsoft Azure Virtual Machine where the application is deployed using Docker Compose.
 
 ---
 
-## API Endpoint
+## Deployment Services
 
-### Health Check
+| Service  | Technology | Port  |
+| -------- | ---------- | ----- |
+| Frontend | React.js   | 3000  |
+| Backend  | Express.js | 5000  |
+| Database | MongoDB    | 27017 |
 
-```
-GET /
-```
-
-Example Response
-
-```json
-{
-    "message": "Backend is running successfully."
-}
-```
 
 ---
-
-## CI/CD Pipeline
-
-The project uses **GitHub Actions** with a **Self-Hosted Runner** installed on a Microsoft Azure Virtual Machine.
-
-Deployment process:
-
-1. Push code to GitHub
-2. GitHub Actions workflow starts
-3. Self-hosted runner receives the job
-4. Latest code is pulled from GitHub
-5. Docker images are rebuilt
-6. Docker containers are restarted automatically
-
----
-
-## Cloud Deployment
-
-Cloud Provider:
-
-- Microsoft Azure
-
-Operating System:
-
-- Ubuntu Server 24.04 LTS
-
-Deployment Method:
-
-- Docker Compose
-
-Current Services
-
-| Service | Port |
-|----------|------|
-| React Frontend | 3000 |
-| Express Backend | 5000 |
-
----
-
-## Current Progress
-
-Completed
-
-- Project initialization
-- React application setup
-- Express backend setup
-- Docker configuration
-- Docker Compose configuration
-- GitHub repository setup
-- Azure Virtual Machine setup
-- SSH configuration
-- GitHub Self-Hosted Runner
-- GitHub Actions CI/CD pipeline
-
-In Progress
-
-- React page development
-- Express API development
-
-
-
-
 
 ## Authors
 
 ### Soumitra Saha
-- Role: Project Manager
-- GitHub: https://github.com/Soumitra-32
+
+**Project Manager**
+
+GitHub: https://github.com/Soumitra-32
 
 ### Sukonya Dutta
-- Role: Frontend Engineer
-- GitHub: https://github.com/Dutta-Pushpa
+
+**Frontend Engineer**
+
+GitHub: https://github.com/Dutta-Pushpa
 
 ### Sadikur Rahman Khan
-- Role: Backend Engineer
-- GitHub: https://github.com/Sadik-khan077
+
+**Backend Engineer**
+
+GitHub: https://github.com/Sadik-khan077
 
 ### Wasik Ahmed
-- Role: Software Quality Assurance (SQA) Engineer
-- GitHub: https://github.com/WasikAhmed00
 
-Department of Computer Science and Engineering
+**Software Quality Assurance (SQA) Engineer**
 
-Jahangirnagar University
+GitHub: https://github.com/WasikAhmed00
+
+---
+
+## Academic Information
+
+**Department of Computer Science and Engineering**
+**Jahangirnagar University**
+
+**Course:** Web-II
 
 ---
 
 ## License
 
-This project is developed for academic and learning purposes.
+This project is developed for academic and educational purposes.
