@@ -19,8 +19,7 @@ app.get("/", (req, res) => {
 
     res.json({
 
-        message: "Backend is running 
-successfully."
+        message: "Backend is running successfully."
 
     });
 
