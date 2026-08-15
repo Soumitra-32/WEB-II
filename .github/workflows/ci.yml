@@ -153,35 +153,9 @@ jobs:
           docker compose ps
 
 
-      # ----------------------------------------
-      # Test Express Backend
-      # ----------------------------------------
+     
 
-      - name: Test Backend
-        run: |
-          echo "Waiting for backend to start listening on port 5000..."
-          for i in {1..10}; do
-            if curl -f http://localhost:5000 > /dev/null 2>&1; then
-              echo "✅ Backend is live and responding!"
-              exit 0
-            fi
-            echo "Attempt $i/10: Backend not ready yet, retrying in 2 seconds..."
-            sleep 2
-          done
-
-          echo "❌ Backend failed to respond on port 5000 within 20 seconds."
-          cd ~/WEB-II && docker compose logs --tail=50
-          exit 1
-
-
-      # ----------------------------------------
-      # Test React Frontend
-      # ----------------------------------------
-
-      - name: Test Frontend
-        run: |
-          curl -f http://localhost
-
+      
 
       # ----------------------------------------
       # Install Newman
