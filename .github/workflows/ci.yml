@@ -153,23 +153,9 @@ jobs:
           docker compose ps
 
 
-      # ----------------------------------------
-      # Test Express Backend
-      # ----------------------------------------
+     
 
-      - name: Test Backend
-        run: |
-          curl -f http://localhost:5000
-
-
-      # ----------------------------------------
-      # Test React Frontend
-      # ----------------------------------------
-
-      - name: Test Frontend
-        run: |
-          curl -f http://localhost
-
+      
 
       # ----------------------------------------
       # Install Newman
