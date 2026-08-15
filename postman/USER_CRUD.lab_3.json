@@ -6,6 +6,13 @@
     "_exporter_id": "57151836",
     "_collection_link": "https://go.postman.co/collection/57151836-84f96a70-f3ff-4cd1-86a7-7b77b8c17528?source=collection_link"
   },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://20.2.232.254:5000",
+      "type": "string"
+    }
+  ],
   "item": [
     {
       "name": "create_user",
