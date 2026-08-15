@@ -174,7 +174,14 @@ jobs:
           exit 1
 
 
-     
+      # ----------------------------------------
+      # Test React Frontend
+      # ----------------------------------------
+
+      - name: Test Frontend
+        run: |
+          curl -f http://localhost
+
 
       # ----------------------------------------
       # Install Newman
