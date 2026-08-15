@@ -1,0 +1,255 @@
+{
+  "info": {
+    "_postman_id": "84f96a70-f3ff-4cd1-86a7-7b77b8c17528",
+    "name": "USER_CRUD",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "57151836",
+    "_collection_link": "https://go.postman.co/collection/57151836-84f96a70-f3ff-4cd1-86a7-7b77b8c17528?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "create_user",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const jsonData = pm.response.json();\r",
+              "if (jsonData.data && jsonData.data._id) { \r",
+              "    pm.collectionVariables.set('userId', jsonData.data._id); \r",
+              "}\r",
+              "pm.test('Status is 201', () => pm.response.to.have.status(201));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Soumitra Saha\",\r\n  \"studentId\": \"356\",\r\n  \"universityEmail\": \"20230657091@juniv.edu\",\r\n  \"department\": \"CSE\",\r\n  \"role\": \"student\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/users",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "create_user",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const jsonData = pm.response.json();\r",
+              "if (jsonData.data && jsonData.data._id) { \r",
+              "    pm.collectionVariables.set('userId', jsonData.data._id); \r",
+              "}\r",
+              "pm.test('Status is 201', () => pm.response.to.have.status(201));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Sadman Rahman\",\r\n  \"studentId\": \"359\",\r\n  \"universityEmail\": \"20230657094@juniv.edu\",\r\n  \"department\": \"IIT\",\r\n  \"role\": \"student\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/users",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/users",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Test status code\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "// Verify response data matches requested userId\r",
+              "const jsonData = pm.response.json();\r",
+              "const expectedUserId = pm.collectionVariables.get(\"userId\");\r",
+              "\r",
+              "pm.test(\"Response contains correct User ID\", function () {\r",
+              "    const responseId = jsonData._id || (jsonData.data && jsonData.data._id);\r",
+              "    pm.expect(responseId).to.eql(expectedUserId);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Roton\",\r\n  \"studentId\": \"349\",\r\n  \"universityEmail\": \"roton@university.edu\",\r\n  \"department\": \"CSE\",\r\n  \"role\": \"student\"\r\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/users/{{userId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "{{userId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update_user",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Test status code\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "// Verify the department was updated to EEE\r",
+              "const jsonData = pm.response.json();\r",
+              "const updatedDepartment = jsonData.department || (jsonData.data && jsonData.data.department);\r",
+              "\r",
+              "pm.test(\"Department successfully updated to EEE\", function () {\r",
+              "    pm.expect(updatedDepartment).to.eql(\"EEE\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"department\": \"EEE\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/users/{{userId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "{{userId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "delete_user",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/users/{{userId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "{{userId}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": ""
+    },
+    {
+      "key": "userId",
+      "value": ""
+    }
+  ]
+}
