@@ -28,7 +28,7 @@ jobs:
           cd ~/WEB-II
           git fetch origin
           git checkout ${{ github.ref_name }}
-          git pull origin ${{ github.ref_name }}
+          git reset --hard origin/${{ github.ref_name }}
 
       # ----------------------------------------
       # Stop old containers
