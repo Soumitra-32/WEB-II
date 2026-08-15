@@ -2,34 +2,25 @@
   "info": {
     "_postman_id": "84f96a70-f3ff-4cd1-86a7-7b77b8c17528",
     "name": "USER_CRUD",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "57151836",
-    "_collection_link": "https://go.postman.co/collection/57151836-84f96a70-f3ff-4cd1-86a7-7b77b8c17528?source=collection_link"
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
-  "variable": [
-    {
-      "key": "baseUrl",
-      "value": "http://20.2.232.254:5000",
-      "type": "string"
-    }
-  ],
   "item": [
     {
-      "name": "create_user",
+      "name": "create_user_1",
       "event": [
         {
           "listen": "test",
           "script": {
             "exec": [
-              "const jsonData = pm.response.json();\r",
-              "if (jsonData.data && jsonData.data._id) { \r",
-              "    pm.collectionVariables.set('userId', jsonData.data._id); \r",
-              "}\r",
+              "const jsonData = pm.response.json();",
+              "if (jsonData.data && jsonData.data._id) {",
+              "    pm.collectionVariables.set('userId', jsonData.data._id);",
+              "} else if (jsonData._id) {",
+              "    pm.collectionVariables.set('userId', jsonData._id);",
+              "}",
               "pm.test('Status is 201', () => pm.response.to.have.status(201));"
             ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
+            "type": "text/javascript"
           }
         }
       ],
@@ -44,7 +35,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"name\": \"Soumitra Saha\",\r\n  \"studentId\": \"356\",\r\n  \"universityEmail\": \"20230657091@juniv.edu\",\r\n  \"department\": \"CSE\",\r\n  \"role\": \"student\"\r\n}",
+          "raw": "{\n  \"name\": \"Soumitra Saha\",\n  \"studentId\": \"356\",\n  \"universityEmail\": \"20230657091@juniv.edu\",\n  \"department\": \"CSE\",\n  \"role\": \"student\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -65,30 +56,36 @@
       "response": []
     },
     {
-      "name": "create_user",
+      "name": "create_user_2",
       "event": [
         {
           "listen": "test",
           "script": {
             "exec": [
-              "const jsonData = pm.response.json();\r",
-              "if (jsonData.data && jsonData.data._id) { \r",
-              "    pm.collectionVariables.set('userId', jsonData.data._id); \r",
-              "}\r",
+              "const jsonData = pm.response.json();",
+              "if (jsonData.data && jsonData.data._id) {",
+              "    pm.collectionVariables.set('userId', jsonData.data._id);",
+              "} else if (jsonData._id) {",
+              "    pm.collectionVariables.set('userId', jsonData._id);",
+              "}",
               "pm.test('Status is 201', () => pm.response.to.have.status(201));"
             ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
+            "type": "text/javascript"
           }
         }
       ],
       "request": {
         "method": "POST",
-        "header": [],
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"name\": \"Sadman Rahman\",\r\n  \"studentId\": \"359\",\r\n  \"universityEmail\": \"20230657094@juniv.edu\",\r\n  \"department\": \"IIT\",\r\n  \"role\": \"student\"\r\n}",
+          "raw": "{\n  \"name\": \"Toron Rahman\",\n  \"studentId\": \"390\",\n  \"universityEmail\": \"20230658314@juniv.edu\",\n  \"department\": \"IIT\",\n  \"role\": \"student\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -109,7 +106,27 @@
       "response": []
     },
     {
-      "name": "New Request",
+      "name": "get_all_users_and_pick_last",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+              "",
+              "const response = pm.response.json();",
+              "const users = Array.isArray(response) ? response : (response.data || []);",
+              "",
+              "if (users.length > 0) {",
+              "    const lastUser = users[users.length - 1];",
+              "    pm.collectionVariables.set('userId', lastUser._id);",
+              "    console.log('Selected Last User ID:', lastUser._id);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
       "request": {
         "method": "GET",
         "header": [],
@@ -127,29 +144,25 @@
       "response": []
     },
     {
-      "name": "New Request",
+      "name": "get_user_by_id",
       "event": [
         {
           "listen": "test",
           "script": {
             "exec": [
-              "// Test status code\r",
-              "pm.test(\"Status code is 200\", function () {\r",
-              "    pm.response.to.have.status(200);\r",
-              "});\r",
-              "\r",
-              "// Verify response data matches requested userId\r",
-              "const jsonData = pm.response.json();\r",
-              "const expectedUserId = pm.collectionVariables.get(\"userId\");\r",
-              "\r",
-              "pm.test(\"Response contains correct User ID\", function () {\r",
-              "    const responseId = jsonData._id || (jsonData.data && jsonData.data._id);\r",
-              "    pm.expect(responseId).to.eql(expectedUserId);\r",
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "const jsonData = pm.response.json();",
+              "const expectedUserId = pm.collectionVariables.get('userId');",
+              "",
+              "pm.test('Response contains correct User ID', function () {",
+              "    const responseId = jsonData._id || (jsonData.data && jsonData.data._id);",
+              "    pm.expect(responseId).to.eql(expectedUserId);",
               "});"
             ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
+            "type": "text/javascript"
           }
         }
       ],
@@ -159,10 +172,6 @@
       "request": {
         "method": "GET",
         "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n  \"name\": \"Roton\",\r\n  \"studentId\": \"349\",\r\n  \"universityEmail\": \"roton@university.edu\",\r\n  \"department\": \"CSE\",\r\n  \"role\": \"student\"\r\n}"
-        },
         "url": {
           "raw": "{{baseUrl}}/api/users/{{userId}}",
           "host": [
@@ -184,31 +193,33 @@
           "listen": "test",
           "script": {
             "exec": [
-              "// Test status code\r",
-              "pm.test(\"Status code is 200\", function () {\r",
-              "    pm.response.to.have.status(200);\r",
-              "});\r",
-              "\r",
-              "// Verify the department was updated to EEE\r",
-              "const jsonData = pm.response.json();\r",
-              "const updatedDepartment = jsonData.department || (jsonData.data && jsonData.data.department);\r",
-              "\r",
-              "pm.test(\"Department successfully updated to EEE\", function () {\r",
-              "    pm.expect(updatedDepartment).to.eql(\"EEE\");\r",
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "const jsonData = pm.response.json();",
+              "const updatedDepartment = jsonData.department || (jsonData.data && jsonData.data.department);",
+              "",
+              "pm.test('Department successfully updated to EEE', function () {",
+              "    pm.expect(updatedDepartment).to.eql('EEE');",
               "});"
             ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
+            "type": "text/javascript"
           }
         }
       ],
       "request": {
         "method": "PUT",
-        "header": [],
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"department\": \"EEE\"\r\n}",
+          "raw": "{\n  \"department\": \"EEE\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -231,6 +242,19 @@
     },
     {
       "name": "delete_user",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200 or 204', function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 204]);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
       "request": {
         "method": "DELETE",
         "header": [],
@@ -252,7 +276,7 @@
   "variable": [
     {
       "key": "baseUrl",
-      "value": ""
+      "value": "http://20.2.232.254:5000"
     },
     {
       "key": "userId",
