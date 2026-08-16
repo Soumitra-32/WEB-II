@@ -1,0 +1,228 @@
+{
+  "info": {
+    "name": "Booking CRUD - University Bus Booking System - Azure",
+    "description": "Booking CRUD Postman collection configured for the WEB-II Azure server at http://20.2.232.254:5000.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://20.2.232.254:5000"
+    },
+    {
+      "key": "bookingId",
+      "value": ""
+    },
+    {
+      "key": "tripId",
+      "value": "689f11111111111111111111"
+    },
+    {
+      "key": "studentId",
+      "value": "689f22222222222222222222"
+    }
+  ],
+  "item": [
+    {
+      "name": "POST - Create Booking",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const jsonData = pm.response.json();",
+              "if (jsonData.data && jsonData.data._id) { pm.collectionVariables.set('bookingId', jsonData.data._id); }",
+              "pm.test('Create Booking - Status is 201', function () { pm.response.to.have.status(201); });",
+              "pm.test('Create Booking - Booking ID exists', function () { pm.expect(jsonData.data._id).to.exist; });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"bookingReference\": \"UBS-20260816-001\",\n  \"tripId\": \"{{tripId}}\",\n  \"student\": \"{{studentId}}\",\n  \"seatNumber\": 10\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/bookings",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "bookings"
+          ]
+        }
+      }
+    },
+    {
+      "name": "GET - Get All Bookings",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const jsonData = pm.response.json();",
+              "pm.test('Get All Bookings - Status is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Get All Bookings - Response data is an array', function () { pm.expect(jsonData.data).to.be.an('array'); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/bookings",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "bookings"
+          ]
+        }
+      }
+    },
+    {
+      "name": "GET - Get Booking By ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const jsonData = pm.response.json();",
+              "pm.test('Get Booking By ID - Status is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Get Booking By ID - Correct booking returned', function () { pm.expect(jsonData.data._id).to.eql(pm.collectionVariables.get('bookingId')); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/bookings/{{bookingId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "bookings",
+            "{{bookingId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "PUT - Update Booking By ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const jsonData = pm.response.json();",
+              "pm.test('Update Booking - Status is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Update Booking - Seat number is updated', function () { pm.expect(jsonData.data.seatNumber).to.eql(12); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"seatNumber\": 12,\n  \"status\": \"confirmed\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/bookings/{{bookingId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "bookings",
+            "{{bookingId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "DELETE - Delete Booking By ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const jsonData = pm.response.json();",
+              "pm.test('Delete Booking - Status is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Delete Booking - Success is true', function () { pm.expect(jsonData.success).to.eql(true); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/bookings/{{bookingId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "bookings",
+            "{{bookingId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "GET - Verify Deleted Booking Returns 404",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Deleted Booking - Status is 404', function () { pm.response.to.have.status(404); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/bookings/{{bookingId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "bookings",
+            "{{bookingId}}"
+          ]
+        }
+      }
+    }
+  ]
+}
