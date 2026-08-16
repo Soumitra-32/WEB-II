@@ -1,0 +1,57 @@
+{
+  "info": {
+    "name": "Trip CRUD",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://20.2.232.254:5000" },
+    { "key": "routeId", "value": "650f1a2b3c4d5e6f7a8b9c0d" },
+    { "key": "tripId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Create Trip",
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "const jsonData = pm.response.json();",
+        "if (jsonData.data && jsonData.data._id) { pm.collectionVariables.set('tripId', jsonData.data._id); }",
+        "pm.test('Status is 201', () => pm.response.to.have.status(201));"
+      ]}}],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"route\": \"{{routeId}}\",\n  \"tripDate\": \"2026-08-20\",\n  \"departureTime\": \"08:00 AM\",\n  \"availableSeats\": 40,\n  \"status\": \"scheduled\"\n}" },
+        "url": { "raw": "{{baseUrl}}/api/trips", "host": ["{{baseUrl}}"], "path": ["api", "trips"] }
+      }
+    },
+    {
+      "name": "Get All Trips",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{baseUrl}}/api/trips", "host": ["{{baseUrl}}"], "path": ["api", "trips"] }
+      }
+    },
+    {
+      "name": "Get Trip By ID",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{baseUrl}}/api/trips/{{tripId}}", "host": ["{{baseUrl}}"], "path": ["api", "trips", "{{tripId}}"] }
+      }
+    },
+    {
+      "name": "Update Trip",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"availableSeats\": 38\n}" },
+        "url": { "raw": "{{baseUrl}}/api/trips/{{tripId}}", "host": ["{{baseUrl}}"], "path": ["api", "trips", "{{tripId}}"] }
+      }
+    },
+    {
+      "name": "Delete Trip",
+      "request": {
+        "method": "DELETE",
+        "url": { "raw": "{{baseUrl}}/api/trips/{{tripId}}", "host": ["{{baseUrl}}"], "path": ["api", "trips", "{{tripId}}"] }
+      }
+    }
+  ]
+}
