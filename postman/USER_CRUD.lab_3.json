@@ -1,26 +1,39 @@
 {
   "info": {
-    "_postman_id": "84f96a70-f3ff-4cd1-86a7-7b77b8c17528",
-    "name": "USER_CRUD",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    "_postman_id": "d3d4528c-52b8-4960-b661-a7be2e755fb8",
+    "name": "User CRUD2",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "57151836",
+    "_collection_link": "https://go.postman.co/collection/57151836-d3d4528c-52b8-4960-b661-a7be2e755fb8?source=collection_link"
   },
   "item": [
     {
-      "name": "create_user_1",
+      "name": "01_create_user_1",
       "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const unique1 = Date.now() + '-' + Math.floor(Math.random() * 1000000);",
+              "pm.collectionVariables.set('genStudentId1', 'STU-' + unique1);",
+              "pm.collectionVariables.set('genEmail1', 'user1-' + unique1 + '@juniv.edu');"
+            ]
+          }
+        },
         {
           "listen": "test",
           "script": {
+            "type": "text/javascript",
             "exec": [
-              "const jsonData = pm.response.json();",
-              "if (jsonData.data && jsonData.data._id) {",
-              "    pm.collectionVariables.set('userId', jsonData.data._id);",
-              "} else if (jsonData._id) {",
-              "    pm.collectionVariables.set('userId', jsonData._id);",
-              "}",
-              "pm.test('Status is 201', () => pm.response.to.have.status(201));"
-            ],
-            "type": "text/javascript"
+              "pm.test('Status is 201', () => pm.response.to.have.status(201));",
+              "var resJson1 = pm.response.json();",
+              "var userData1 = resJson1.data || resJson1;",
+              "if (userData1._id) { pm.collectionVariables.set('userId', userData1._id); }",
+              "pm.collectionVariables.set('dupStudentId', userData1.studentId);",
+              "pm.collectionVariables.set('dupEmail', userData1.universityEmail);",
+              "pm.test('Response has an id', () => pm.expect(userData1._id).to.be.a('string'));"
+            ]
           }
         }
       ],
@@ -29,13 +42,12 @@
         "header": [
           {
             "key": "Content-Type",
-            "value": "application/json",
-            "type": "text"
+            "value": "application/json"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"name\": \"Soumitra Saha\",\n  \"studentId\": \"356\",\n  \"universityEmail\": \"20230657091@juniv.edu\",\n  \"department\": \"CSE\",\n  \"role\": \"student\"\n}",
+          "raw": "{\n  \"name\": \"Soumitra Saha\",\n  \"studentId\": \"{{genStudentId1}}\",\n  \"universityEmail\": \"{{genEmail1}}\",\n  \"department\": \"CSE\",\n  \"role\": \"student\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -56,21 +68,30 @@
       "response": []
     },
     {
-      "name": "create_user_2",
+      "name": "02_create_user_2",
       "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const unique2 = Date.now() + '-' + Math.floor(Math.random() * 1000000);",
+              "pm.collectionVariables.set('genStudentId2', 'STU-' + unique2);",
+              "pm.collectionVariables.set('genEmail2', 'user2-' + unique2 + '@juniv.edu');"
+            ]
+          }
+        },
         {
           "listen": "test",
           "script": {
+            "type": "text/javascript",
             "exec": [
-              "const jsonData = pm.response.json();",
-              "if (jsonData.data && jsonData.data._id) {",
-              "    pm.collectionVariables.set('userId', jsonData.data._id);",
-              "} else if (jsonData._id) {",
-              "    pm.collectionVariables.set('userId', jsonData._id);",
-              "}",
-              "pm.test('Status is 201', () => pm.response.to.have.status(201));"
-            ],
-            "type": "text/javascript"
+              "pm.test('Status is 201', () => pm.response.to.have.status(201));",
+              "var resJson2 = pm.response.json();",
+              "var userData2 = resJson2.data || resJson2;",
+              "if (userData2._id) { pm.collectionVariables.set('userId2', userData2._id); }",
+              "pm.test('Response has an id', () => pm.expect(userData2._id).to.be.a('string'));"
+            ]
           }
         }
       ],
@@ -79,13 +100,12 @@
         "header": [
           {
             "key": "Content-Type",
-            "value": "application/json",
-            "type": "text"
+            "value": "application/json"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"name\": \"Toron Rahman\",\n  \"studentId\": \"390\",\n  \"universityEmail\": \"20230658314@juniv.edu\",\n  \"department\": \"IIT\",\n  \"role\": \"student\"\n}",
+          "raw": "{\n  \"name\": \"Toron Rahman\",\n  \"studentId\": \"{{genStudentId2}}\",\n  \"universityEmail\": \"{{genEmail2}}\",\n  \"department\": \"IIT\",\n  \"role\": \"student\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -106,24 +126,108 @@
       "response": []
     },
     {
-      "name": "get_all_users_and_pick_last",
+      "name": "03_create_user_duplicate_expect_400",
       "event": [
         {
           "listen": "test",
           "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 400 on duplicate unique field', () => pm.response.to.have.status(400));",
+              "const jsonData = pm.response.json();",
+              "pm.test('Response reports failure', () => pm.expect(jsonData.success).to.eql(false));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Duplicate Test\",\n  \"studentId\": \"{{dupStudentId}}\",\n  \"universityEmail\": \"{{dupEmail}}\",\n  \"department\": \"CSE\",\n  \"role\": \"student\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/users",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "04_create_user_bad_input_expect_400",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 400 on missing required fields', () => pm.response.to.have.status(400));",
+              "const jsonData = pm.response.json();",
+              "pm.test('Response reports failure', () => pm.expect(jsonData.success).to.eql(false));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"role\": \"student\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/users",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "05_get_all_users",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
             "exec": [
               "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
-              "",
               "const response = pm.response.json();",
-              "const users = Array.isArray(response) ? response : (response.data || []);",
-              "",
-              "if (users.length > 0) {",
-              "    const lastUser = users[users.length - 1];",
-              "    pm.collectionVariables.set('userId', lastUser._id);",
-              "    console.log('Selected Last User ID:', lastUser._id);",
-              "}"
-            ],
-            "type": "text/javascript"
+              "const users = response.data || [];",
+              "pm.test('Users array is not empty', () => pm.expect(users.length).to.be.above(0));"
+            ]
           }
         }
       ],
@@ -144,31 +248,22 @@
       "response": []
     },
     {
-      "name": "get_user_by_id",
+      "name": "06_get_user_by_id",
       "event": [
         {
           "listen": "test",
           "script": {
+            "type": "text/javascript",
             "exec": [
-              "pm.test('Status code is 200', function () {",
-              "    pm.response.to.have.status(200);",
-              "});",
-              "",
+              "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
               "const jsonData = pm.response.json();",
-              "const expectedUserId = pm.collectionVariables.get('userId');",
-              "",
-              "pm.test('Response contains correct User ID', function () {",
-              "    const responseId = jsonData._id || (jsonData.data && jsonData.data._id);",
-              "    pm.expect(responseId).to.eql(expectedUserId);",
-              "});"
-            ],
-            "type": "text/javascript"
+              "const expectedId = pm.collectionVariables.get('userId');",
+              "const responseId = jsonData._id || (jsonData.data && jsonData.data._id);",
+              "pm.test('Response contains correct User ID', () => pm.expect(responseId).to.eql(expectedId));"
+            ]
           }
         }
       ],
-      "protocolProfileBehavior": {
-        "disableBodyPruning": true
-      },
       "request": {
         "method": "GET",
         "header": [],
@@ -187,24 +282,78 @@
       "response": []
     },
     {
-      "name": "update_user",
+      "name": "07_get_user_malformed_id_expect_400",
       "event": [
         {
           "listen": "test",
           "script": {
+            "type": "text/javascript",
             "exec": [
-              "pm.test('Status code is 200', function () {",
-              "    pm.response.to.have.status(200);",
-              "});",
-              "",
+              "pm.test('Status is 400 for malformed id', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/users/not-a-valid-id",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "not-a-valid-id"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "08_get_user_nonexistent_id_expect_404",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 404 for nonexistent id', () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/users/000000000000000000000000",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "000000000000000000000000"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "09_update_user",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
               "const jsonData = pm.response.json();",
-              "const updatedDepartment = jsonData.department || (jsonData.data && jsonData.data.department);",
-              "",
-              "pm.test('Department successfully updated to EEE', function () {",
-              "    pm.expect(updatedDepartment).to.eql('EEE');",
-              "});"
-            ],
-            "type": "text/javascript"
+              "const department = jsonData.department || (jsonData.data && jsonData.data.department);",
+              "pm.test('Department successfully updated to EEE', () => pm.expect(department).to.eql('EEE'));"
+            ]
           }
         }
       ],
@@ -213,8 +362,7 @@
         "header": [
           {
             "key": "Content-Type",
-            "value": "application/json",
-            "type": "text"
+            "value": "application/json"
           }
         ],
         "body": {
@@ -241,17 +389,59 @@
       "response": []
     },
     {
-      "name": "delete_user",
+      "name": "10_update_user_nonexistent_id_expect_404",
       "event": [
         {
           "listen": "test",
           "script": {
+            "type": "text/javascript",
             "exec": [
-              "pm.test('Status code is 200 or 204', function () {",
-              "    pm.expect(pm.response.code).to.be.oneOf([200, 204]);",
-              "});"
-            ],
-            "type": "text/javascript"
+              "pm.test('Status is 404 for nonexistent id', () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"department\": \"EEE\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/users/000000000000000000000000",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "000000000000000000000000"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "11_delete_user",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', () => pm.response.to.have.status(200));"
+            ]
           }
         }
       ],
@@ -271,6 +461,90 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "12_delete_user_again_expect_404",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 404, already deleted', () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/users/{{userId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "{{userId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "13_cleanup_delete_user_2",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/users/{{userId2}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "{{userId2}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
     }
   ],
   "variable": [
@@ -280,6 +554,34 @@
     },
     {
       "key": "userId",
+      "value": ""
+    },
+    {
+      "key": "userId2",
+      "value": ""
+    },
+    {
+      "key": "dupStudentId",
+      "value": ""
+    },
+    {
+      "key": "dupEmail",
+      "value": ""
+    },
+    {
+      "key": "genStudentId1",
+      "value": ""
+    },
+    {
+      "key": "genEmail1",
+      "value": ""
+    },
+    {
+      "key": "genStudentId2",
+      "value": ""
+    },
+    {
+      "key": "genEmail2",
       "value": ""
     }
   ]
