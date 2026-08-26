@@ -1,0 +1,400 @@
+{
+  "info": {
+    "_postman_id": "46ee4954-8ddd-4aea-9fda-8a9bc47fb201",
+    "name": "Pushpa's Booking CRUD - Route User Trip Booking",
+    "description": "Creates Route, User, Trip and Booking test data, then executes Booking CRUD tests.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "57175319",
+    "_collection_link": "https://go.postman.co/collection/57175319-46ee4954-8ddd-4aea-9fda-8a9bc47fb201?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "01 - CREATE Route",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 201', () => pm.response.to.have.status(201));",
+              "const json = pm.response.json();",
+              "pm.test('success is true', () => pm.expect(json.success).to.eql(true));",
+              "pm.test('Route ID exists', () => pm.expect(json.data._id).to.be.a('string').and.not.empty);",
+              "pm.test('Origin is correct', () => pm.expect(json.data.origin).to.eql('Test Origin'));",
+              "pm.test('Destination is correct', () => pm.expect(json.data.destination).to.eql('Test Destination'));",
+              "pm.test('Total seats is 40', () => pm.expect(json.data.totalSeats).to.eql(40));",
+              "pm.collectionVariables.set('routeId', json.data._id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"origin\": \"Test Origin\",\n  \"destination\": \"Test Destination\",\n  \"departureTime\": \"10:00\",\n  \"days\": [\n    \"Monday\",\n    \"Wednesday\",\n    \"Friday\"\n  ],\n  \"totalSeats\": 40\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/routes",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "routes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "02 - CREATE User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 201', () => pm.response.to.have.status(201));",
+              "const json = pm.response.json();",
+              "pm.test('success is true', () => pm.expect(json.success).to.eql(true));",
+              "pm.test('User ID exists', () => pm.expect(json.data._id).to.be.a('string').and.not.empty);",
+              "pm.test('Role is student', () => pm.expect(json.data.role).to.eql('student'));",
+              "pm.collectionVariables.set('userId', json.data._id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Postman Test Student\",\n  \"studentId\": \"POSTMAN-{{$timestamp}}\",\n  \"universityEmail\": \"postman-{{$timestamp}}@example.com\",\n  \"department\": \"Computer Science\",\n  \"role\": \"student\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/users",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "03 - CREATE Trip",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 201', () => pm.response.to.have.status(201));",
+              "const json = pm.response.json();",
+              "pm.test('success is true', () => pm.expect(json.success).to.eql(true));",
+              "pm.test('Trip ID exists', () => pm.expect(json.data._id).to.be.a('string').and.not.empty);",
+              "pm.test('Trip route matches Route', () => pm.expect(String(json.data.route)).to.eql(pm.collectionVariables.get('routeId')));",
+              "pm.test('Available seats is 40', () => pm.expect(json.data.availableSeats).to.eql(40));",
+              "pm.collectionVariables.set('tripId', json.data._id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"route\": \"{{routeId}}\",\n  \"tripDate\": \"2027-01-15T00:00:00.000Z\",\n  \"departureTime\": \"10:00\",\n  \"availableSeats\": 40,\n  \"status\": \"scheduled\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/trips",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "trips"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "04 - CREATE Booking",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 201', () => pm.response.to.have.status(201));",
+              "const json = pm.response.json();",
+              "pm.test('success is true', () => pm.expect(json.success).to.eql(true));",
+              "pm.test('Booking ID exists', () => pm.expect(json.data._id).to.be.a('string').and.not.empty);",
+              "pm.test('Booking reference exists', () => pm.expect(json.data.bookingReference).to.be.a('string').and.not.empty);",
+              "pm.test('Trip ID matches', () => pm.expect(String(json.data.tripId)).to.eql(pm.collectionVariables.get('tripId')));",
+              "pm.test('Student ID matches', () => pm.expect(String(json.data.student)).to.eql(pm.collectionVariables.get('userId')));",
+              "pm.test('Seat number is 1', () => pm.expect(json.data.seatNumber).to.eql(1));",
+              "pm.test('Status is confirmed', () => pm.expect(json.data.status).to.eql('confirmed'));",
+              "pm.collectionVariables.set('bookingId', json.data._id);",
+              "pm.collectionVariables.set('bookingReference', json.data.bookingReference);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"bookingReference\": \"BOOK-{{$timestamp}}\",\n  \"tripId\": \"{{tripId}}\",\n  \"student\": \"{{userId}}\",\n  \"seatNumber\": 1\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/bookings",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "bookings"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "05 - GET All Bookings",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+              "const json = pm.response.json();",
+              "pm.test('success is true', () => pm.expect(json.success).to.eql(true));",
+              "pm.test('count is a number', () => pm.expect(json.count).to.be.a('number'));",
+              "pm.test('data is an array', () => pm.expect(json.data).to.be.an('array'));",
+              "pm.test('Created booking is present', () => pm.expect(json.data.some(b => String(b._id) === pm.collectionVariables.get('bookingId'))).to.eql(true));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/bookings",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "bookings"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "06 - GET Booking By ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+              "const json = pm.response.json();",
+              "pm.test('success is true', () => pm.expect(json.success).to.eql(true));",
+              "pm.test('Correct booking ID', () => pm.expect(String(json.data._id)).to.eql(pm.collectionVariables.get('bookingId')));",
+              "pm.test('Booking reference matches', () => pm.expect(json.data.bookingReference).to.eql(pm.collectionVariables.get('bookingReference')));",
+              "pm.test('Seat number is 1', () => pm.expect(json.data.seatNumber).to.eql(1));",
+              "pm.test('Student is populated', () => pm.expect(json.data.student).to.be.an('object'));",
+              "pm.test('Trip is populated', () => pm.expect(json.data.tripId).to.be.an('object'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/bookings/{{bookingId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "bookings",
+            "{{bookingId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "07 - UPDATE Booking",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+              "const json = pm.response.json();",
+              "pm.test('success is true', () => pm.expect(json.success).to.eql(true));",
+              "pm.test('Correct update message', () => pm.expect(json.message).to.eql('Booking updated successfully'));",
+              "pm.test('Status is cancelled', () => pm.expect(json.data.status).to.eql('cancelled'));",
+              "pm.test('Cancellation reason updated', () => pm.expect(json.data.cancellationReason).to.eql('Cancelled by student for Postman testing'));",
+              "pm.test('Booking ID unchanged', () => pm.expect(String(json.data._id)).to.eql(pm.collectionVariables.get('bookingId')));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"cancelled\",\n  \"cancelledAt\": \"{{$isoTimestamp}}\",\n  \"cancellationReason\": \"Cancelled by student for Postman testing\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/bookings/{{bookingId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "bookings",
+            "{{bookingId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "08 - DELETE Booking",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+              "const json = pm.response.json();",
+              "pm.test('success is true', () => pm.expect(json.success).to.eql(true));",
+              "pm.test('Correct delete message', () => pm.expect(json.message).to.eql('Booking deleted successfully'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/bookings/{{bookingId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "bookings",
+            "{{bookingId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "09 - VERIFY Deleted Booking",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 404', () => pm.response.to.have.status(404));",
+              "const json = pm.response.json();",
+              "pm.test('success is false', () => pm.expect(json.success).to.eql(false));",
+              "pm.test('Correct not-found message', () => pm.expect(json.message).to.eql('Booking not found'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/bookings/{{bookingId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "bookings",
+            "{{bookingId}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://20.2.232.254:5000"
+    },
+    {
+      "key": "routeId",
+      "value": ""
+    },
+    {
+      "key": "userId",
+      "value": ""
+    },
+    {
+      "key": "tripId",
+      "value": ""
+    },
+    {
+      "key": "bookingId",
+      "value": ""
+    },
+    {
+      "key": "bookingReference",
+      "value": ""
+    }
+  ]
+}
