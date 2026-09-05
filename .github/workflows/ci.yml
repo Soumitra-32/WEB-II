@@ -119,6 +119,16 @@ jobs:
       # ----------------------------------------
       # Build Docker Images
       # ----------------------------------------
+      - name: Create backend .env
+        run: |
+             cat <<EOF > backend/.env
+             JWT_SECRET=${{ secrets.JWT_SECRET }}
+             JWT_EXPIRES_IN=1d
+             EOF 
+
+
+
+
 
       - name: Build Docker Images
         run: |
@@ -126,14 +136,7 @@ jobs:
 
 
 
-      - name: Create backend .env
-        run: |
-          cat <<EOF > backend/.env
-          DB_HOST=${{ secrets.DB_HOST }}
-          DB_USER=${{ secrets.DB_USER }}
-          DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-          JWT_SECRET=${{ secrets.JWT_SECRET }}
-          EOF
+     
 
 
       # ----------------------------------------
