@@ -1,0 +1,98 @@
+{
+  "info": {
+    "_postman_id": "m1-student-flow-001",
+    "name": "Member 1 - Student Registration & Validation Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "01_register_student_member1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 201 Created', () => pm.response.to.have.status(201));",
+              "pm.test('JWT Token generated', () => pm.expect(pm.response.json().token).to.exist);",
+              "if (pm.response.code === 201) {",
+              "    const res = pm.response.json();",
+              "    pm.environment.set('m1Token', res.token);",
+              "    pm.environment.set('m1Email', res.data.universityEmail);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Member 1 Student\",\n  \"studentId\": \"STU1-{{$randomInt}}\",\n  \"universityEmail\": \"student1_{{$randomInt}}@uni.edu\",\n  \"department\": \"CSE\",\n  \"password\": \"pass1234\",\n  \"role\": \"student\"\n}"
+        },
+        "url": { "raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api", "auth", "register"] }
+      }
+    },
+    {
+      "name": "02_prevent_duplicate_registration",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": ["pm.test('Status is 409 Conflict', () => pm.response.to.have.status(409));"],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Duplicate Attempt\",\n  \"studentId\": \"STU1-{{$randomInt}}\",\n  \"universityEmail\": \"{{m1Email}}\",\n  \"password\": \"pass1234\"\n}"
+        },
+        "url": { "raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api", "auth", "register"] }
+      }
+    },
+    {
+      "name": "03_validate_missing_fields_400",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": ["pm.test('Status is 400 Bad Request', () => pm.response.to.have.status(400));"],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Incomplete Student\"\n}"
+        },
+        "url": { "raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api", "auth", "register"] }
+      }
+    },
+    {
+      "name": "04_verify_protected_student_route",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": ["pm.test('Status is 200 OK', () => pm.response.to.have.status(200));"],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{m1Token}}" }],
+        "url": { "raw": "{{baseUrl}}/api/users", "host": ["{{baseUrl}}"], "path": ["api", "users"] }
+      }
+    }
+  ],
+  "variable": [{ "key": "baseUrl", "value": "https://busbooking.me" }]
+}
