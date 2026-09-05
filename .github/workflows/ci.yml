@@ -169,7 +169,26 @@ jobs:
       # ----------------------------------------
       # Run ALL Postman Collections
       # ----------------------------------------
-      
+      - name: Run all Postman API Tests
+        run: |
+          collections=(postman/lab-5/*.json)
+
+          if [ ! -e "${collections[0]}" ]; then
+            echo "No Postman collections found in postman/lab-5."
+            echo "Skipping Postman API tests."
+            exit 0
+          fi
+
+          for collection in "${collections[@]}"; do
+            echo "======================================"
+            echo "Running Postman collection:"
+            echo "$collection"
+            echo "======================================"
+
+            newman run "$collection"
+          done
+
+          
     
 
 
