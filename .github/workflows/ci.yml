@@ -10,186 +10,115 @@ on:
     branches:
       - main
       - development
-      - production
+      
 
 jobs:
 
-  # ==========================================
-  # JOB 1 - BUILD
-  # ==========================================
-
   build:
     name: Build Application
-    runs-on:  ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
 
-      # ----------------------------------------
-      # Checkout repository
-      # ----------------------------------------
-
       - name: Checkout Code
         uses: actions/checkout@v4
-
-
-      # ----------------------------------------
-      # Set up Node.js
-      # ----------------------------------------
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "22"
 
-
-      # ----------------------------------------
-      # Install Backend Dependencies
-      # ----------------------------------------
-
       - name: Install Backend Dependencies
         run: |
           cd backend
           npm install
-
-
-      # ----------------------------------------
-      # Install Frontend Dependencies
-      # ----------------------------------------
 
       - name: Install Frontend Dependencies
         run: |
           cd frontend
           npm install
 
-
-      # ----------------------------------------
-      # Build React Frontend
-      # ----------------------------------------
-
       - name: Build React Frontend
         run: |
           cd frontend
           npm run build
 
-
-      # ----------------------------------------
-      # Set up Docker Buildx
-      # ----------------------------------------
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-
-
-      # ----------------------------------------
-      # Build Docker Images
-      # ----------------------------------------
 
       - name: Build Docker Images
         run: |
           docker compose build
 
-
-  # ==========================================
-  # JOB 2 - API TESTING
-  # ==========================================
 
   api-test:
     name: API Testing
     needs: build
-    runs-on:  ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
-
-      # ----------------------------------------
-      # Checkout repository
-      # ----------------------------------------
 
       - name: Checkout Code
         uses: actions/checkout@v4
 
-
-      # ----------------------------------------
-      # Set up Docker Buildx
-      # ----------------------------------------
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-
-      # ----------------------------------------
-      # Build Docker Images
-      # ----------------------------------------
       - name: Create backend .env
         run: |
-             cat <<EOF > backend/.env
-             JWT_SECRET=${{ secrets.JWT_SECRET }}
-             JWT_EXPIRES_IN=1d
-             EOF 
-
-
-
-
+          cat <<EOF > backend/.env
+          JWT_SECRET=${{ secrets.JWT_SECRET }}
+          JWT_EXPIRES_IN=1d
+          EOF
 
       - name: Build Docker Images
         run: |
           docker compose build
-
-
-
-     
-
-
-      # ----------------------------------------
-      # Start Application
-      # ----------------------------------------
 
       - name: Start Application
         run: |
           docker compose up -d
 
-
-      # ----------------------------------------
-      # Wait for Application
-      # ----------------------------------------
-
-      - name: Wait for Application
-        run: |
-          echo "Waiting for containers to start..."
-          sleep 10
-
-
-      # ----------------------------------------
-      # Check Docker Containers
-      # ----------------------------------------
-
-      - name: Check Container Status
+      - name: Check Docker Containers
         run: |
           docker compose ps
 
+      - name: Check Backend Environment
+        run: |
+          docker compose exec -T backend sh -c 'test -n "$JWT_SECRET" && echo "JWT_SECRET: PRESENT" || echo "JWT_SECRET: MISSING"'
+          docker compose exec -T backend sh -c 'echo "JWT_EXPIRES_IN=$JWT_EXPIRES_IN"'
+          docker compose exec -T backend sh -c 'echo "MONGO_URI=$MONGO_URI"'
 
-     
+      - name: Check MongoDB Connection
+        run: |
+          docker compose exec -T backend node -e "
+            const mongoose = require('mongoose');
+            mongoose.connect(process.env.MONGO_URI)
+              .then(() => {
+                console.log('MongoDB CONNECTION: OK');
+                process.exit(0);
+              })
+              .catch(err => {
+                console.error('MongoDB CONNECTION: FAILED');
+                console.error(err.message);
+                process.exit(1);
+              });
+          "
 
-      
-
-      # ----------------------------------------
-      # Install Newman
-      # ----------------------------------------
+      - name: Show Backend Logs
+        run: |
+          docker compose logs backend --tail=100
 
       - name: Install Newman
         run: |
           npm install -g newman
 
-
-      # ----------------------------------------
-      # Run ALL Postman Collections
-      # ----------------------------------------
       - name: Run all Postman API Tests
         run: |
           collections=(postman/lab-5/*.json)
 
           if [ ! -e "${collections[0]}" ]; then
             echo "No Postman collections found in postman/lab-5."
-            echo "Skipping Postman API tests."
             exit 0
           fi
 
@@ -202,23 +131,10 @@ jobs:
             newman run "$collection"
           done
 
-
-    
-
-
-      # ----------------------------------------
-      # Show Docker Logs if Testing Fails
-      # ----------------------------------------
-
       - name: Show Docker Logs
         if: failure()
         run: |
           docker compose logs
-
-
-      # ----------------------------------------
-      # Stop Containers
-      # ----------------------------------------
 
       - name: Stop Application
         if: always()
