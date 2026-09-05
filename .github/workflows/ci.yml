@@ -64,11 +64,18 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Create backend .env
+        env:
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: |
-          cat <<EOF > backend/.env
-          JWT_SECRET=${{ secrets.JWT_SECRET }}
-          JWT_EXPIRES_IN=1d
-          EOF
+          if [ -z "$JWT_SECRET" ]; then
+            echo "::error::JWT_SECRET GitHub secret is missing or empty"
+            exit 1
+          fi
+
+          printf 'JWT_SECRET=%s\n' "$JWT_SECRET" > backend/.env
+          printf 'JWT_EXPIRES_IN=1d\n' >> backend/.env
+
+          echo "backend/.env created successfully"
 
       - name: Build Docker Images
         run: |
@@ -92,6 +99,7 @@ jobs:
         run: |
           docker compose exec -T backend node -e "
             const mongoose = require('mongoose');
+
             mongoose.connect(process.env.MONGO_URI)
               .then(() => {
                 console.log('MongoDB CONNECTION: OK');
