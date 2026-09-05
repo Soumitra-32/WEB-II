@@ -10,9 +10,11 @@ const {
   deleteBooking
 } = require("../controllers/bookingController");
 
+const { protect } = require("../middleware/authMiddleware");
+
 
 // CREATE
-router.post("/", createBooking);
+router.post("/", protect, createBooking);
 
 
 // READ ALL
@@ -24,11 +26,11 @@ router.get("/:id", getBookingById);
 
 
 // UPDATE
-router.put("/:id", updateBooking);
+router.put("/:id", protect, updateBooking);
 
 
 // DELETE
-router.delete("/:id", deleteBooking);
+router.delete("/:id", protect, deleteBooking);
 
 
 module.exports = router;
