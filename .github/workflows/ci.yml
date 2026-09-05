@@ -125,6 +125,17 @@ jobs:
           docker compose build
 
 
+
+      - name: Create backend .env
+        run: |
+          cat <<EOF > backend/.env
+          DB_HOST=${{ secrets.DB_HOST }}
+          DB_USER=${{ secrets.DB_USER }}
+          DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+          JWT_SECRET=${{ secrets.JWT_SECRET }}
+          EOF
+
+
       # ----------------------------------------
       # Start Application
       # ----------------------------------------
@@ -188,7 +199,7 @@ jobs:
             newman run "$collection"
           done
 
-          
+
     
 
 
