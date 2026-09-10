@@ -136,7 +136,7 @@ jobs:
             echo "======================================"
 
             newman run "$collection" \
-              --env-var "baseUrl=http://localhost:5000"
+              --env-var "baseUrl=https://busbooking.me"
           done
 
       - name: Show Docker Logs
