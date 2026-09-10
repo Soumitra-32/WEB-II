@@ -32,19 +32,59 @@ exports.getRouteById = async (req, res) => {
 };
 
 exports.updateRoute = async (req, res) => {
+
   try {
-    const route = await Route.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true
-    });
+
+    const {
+      origin,
+      destination,
+      departureTime,
+      days,
+      totalSeats
+    } = req.body;
+
+    const route = await Route.findByIdAndUpdate(
+      req.params.id,
+      {
+        origin,
+        destination,
+        departureTime,
+        days,
+        totalSeats
+      },
+      {
+        new: true,
+        runValidators: true
+      }
+    );
+
     if (!route) {
-      return res.status(404).json({ success: false, message: "Route not found" });
+
+      return res.status(404).json({
+        success: false,
+        message: "Route not found"
+      });
+
     }
-    res.status(200).json({ success: true, message: "Route updated successfully", data: route });
+
+    res.status(200).json({
+      success: true,
+      message: "Route updated successfully",
+      data: route
+    });
+
   } catch (error) {
-    res.status(400).json({ success: false, message: error.message });
+
+    res.status(400).json({
+      success: false,
+      message: error.message
+    });
+
   }
+
 };
+
+
 
 exports.deleteRoute = async (req, res) => {
   try {
