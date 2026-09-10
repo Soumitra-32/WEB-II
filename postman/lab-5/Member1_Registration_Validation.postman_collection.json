@@ -1,0 +1,359 @@
+{
+"info": {
+"_postman_id": "44edec6d-438e-4c12-8b64-014bd3854352",
+"name": "Member 1 - Student Registration & Validation Tests",
+"description": "Covers user model validation on registration: required fields, email format, password length, duplicate email/studentId rejection, and confirming a newly registered user can immediately use their token.",
+"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+},
+"item": [
+{
+"name": "00_generate_unique_identifiers",
+"event": [
+{
+"listen": "test",
+"script": {
+"type": "text/javascript",
+"exec": [
+"const rand = Date.now();",
+"pm.environment.set("m1StudentId", "STU-M1-" + rand);",
+"pm.environment.set("m1Email", "m1student" + rand + "@uni.edu");",
+"pm.test("API is reachable", () => pm.response.to.have.status(200));"
+]
+}
+}
+],
+"request": {
+"method": "GET",
+"header": [
+{
+"key": "Content-Type",
+"value": "application/json"
+}
+],
+"url": {
+"raw": "{{baseUrl}}/",
+"host": [
+"{{baseUrl}}"
+],
+"path": []
+}
+},
+"response": []
+},
+{
+"name": "01_register_student_valid",
+"event": [
+{
+"listen": "test",
+"script": {
+"type": "text/javascript",
+"exec": [
+"pm.test("Status code is 201", () => pm.response.to.have.status(201));",
+"pm.test("Response has success true", () => pm.expect(pm.response.json().success).to.eql(true));",
+"pm.test("Response contains JWT token", () => pm.expect(pm.response.json().token).to.exist);",
+"pm.test("Password is not returned", () => pm.expect(pm.response.json().data.password).to.not.exist);",
+"if (pm.response.code === 201) {",
+"    pm.environment.set("m1Token", pm.response.json().token);",
+"    pm.environment.set("m1UserId", pm.response.json().data.id);",
+"}"
+]
+}
+}
+],
+"request": {
+"method": "POST",
+"header": [
+{
+"key": "Content-Type",
+"value": "application/json"
+}
+],
+"url": {
+"raw": "{{baseUrl}}/api/auth/register",
+"host": [
+"{{baseUrl}}"
+],
+"path": [
+"api",
+"auth",
+"register"
+]
+},
+"body": {
+"mode": "raw",
+"raw": "{\n  "name": "Member1 Test Student",\n  "studentId": "{{m1StudentId}}",\n  "universityEmail": "{{m1Email}}",\n  "department": "CSE",\n  "password": "password123",\n  "role": "student"\n}",
+"options": {
+"raw": {
+"language": "json"
+}
+}
+}
+},
+"response": []
+},
+{
+"name": "02_register_duplicate_email_expect_409",
+"event": [
+{
+"listen": "test",
+"script": {
+"type": "text/javascript",
+"exec": [
+"pm.test("Status code is 409 Conflict", () => pm.response.to.have.status(409));",
+"pm.test("Success flag is false", () => pm.expect(pm.response.json().success).to.eql(false));"
+]
+}
+}
+],
+"request": {
+"method": "POST",
+"header": [
+{
+"key": "Content-Type",
+"value": "application/json"
+}
+],
+"url": {
+"raw": "{{baseUrl}}/api/auth/register",
+"host": [
+"{{baseUrl}}"
+],
+"path": [
+"api",
+"auth",
+"register"
+]
+},
+"body": {
+"mode": "raw",
+"raw": "{\n  "name": "Duplicate Attempt",\n  "studentId": "{{m1StudentId}}-dup",\n  "universityEmail": "{{m1Email}}",\n  "department": "CSE",\n  "password": "password123",\n  "role": "student"\n}",
+"options": {
+"raw": {
+"language": "json"
+}
+}
+}
+},
+"response": []
+},
+{
+"name": "03_register_missing_fields_expect_400",
+"event": [
+{
+"listen": "test",
+"script": {
+"type": "text/javascript",
+"exec": [
+"pm.test("Status code is 400", () => pm.response.to.have.status(400));",
+"pm.test("Error message mentions missing fields", () => pm.expect(pm.response.json().message).to.include("Missing"));"
+]
+}
+}
+],
+"request": {
+"method": "POST",
+"header": [
+{
+"key": "Content-Type",
+"value": "application/json"
+}
+],
+"url": {
+"raw": "{{baseUrl}}/api/auth/register",
+"host": [
+"{{baseUrl}}"
+],
+"path": [
+"api",
+"auth",
+"register"
+]
+},
+"body": {
+"mode": "raw",
+"raw": "{\n  "name": "Incomplete User"\n}",
+"options": {
+"raw": {
+"language": "json"
+}
+}
+}
+},
+"response": []
+},
+{
+"name": "04_register_invalid_email_expect_400",
+"event": [
+{
+"listen": "test",
+"script": {
+"type": "text/javascript",
+"exec": [
+"pm.test("Status code is 400", () => pm.response.to.have.status(400));",
+"pm.test("Error mentions valid email", () => pm.expect(pm.response.json().message.toLowerCase()).to.include("email"));"
+]
+}
+}
+],
+"request": {
+"method": "POST",
+"header": [
+{
+"key": "Content-Type",
+"value": "application/json"
+}
+],
+"url": {
+"raw": "{{baseUrl}}/api/auth/register",
+"host": [
+"{{baseUrl}}"
+],
+"path": [
+"api",
+"auth",
+"register"
+]
+},
+"body": {
+"mode": "raw",
+"raw": "{\n  "name": "Bad Email User",\n  "studentId": "{{m1StudentId}}-bademail",\n  "universityEmail": "not-an-email",\n  "department": "CSE",\n  "password": "password123",\n  "role": "student"\n}",
+"options": {
+"raw": {
+"language": "json"
+}
+}
+}
+},
+"response": []
+},
+{
+"name": "05_register_short_password_expect_400",
+"event": [
+{
+"listen": "test",
+"script": {
+"type": "text/javascript",
+"exec": [
+"pm.test("Status code is 400", () => pm.response.to.have.status(400));",
+"pm.test("Error mentions password length", () => pm.expect(pm.response.json().message.toLowerCase()).to.include("password"));"
+]
+}
+}
+],
+"request": {
+"method": "POST",
+"header": [
+{
+"key": "Content-Type",
+"value": "application/json"
+}
+],
+"url": {
+"raw": "{{baseUrl}}/api/auth/register",
+"host": [
+"{{baseUrl}}"
+],
+"path": [
+"api",
+"auth",
+"register"
+]
+},
+"body": {
+"mode": "raw",
+"raw": "{\n  "name": "Short Password User",\n  "studentId": "{{m1StudentId}}-shortpw",\n  "universityEmail": "shortpw{{m1StudentId}}@uni.edu",\n  "department": "CSE",\n  "password": "123"\n}",
+"options": {
+"raw": {
+"language": "json"
+}
+}
+}
+},
+"response": []
+},
+{
+"name": "06_verify_registered_user_can_access_protected_route",
+"event": [
+{
+"listen": "test",
+"script": {
+"type": "javascript",
+"exec": [
+"pm.test("Status code is 200", () => pm.response.to.have.status(200));",
+"pm.test("Returned user email matches registration", () => {",
+"    pm.expect(pm.response.json().data.universityEmail).to.eql(pm.environment.get("m1Email"));",
+"});"
+]
+}
+}
+],
+"request": {
+"method": "GET",
+"header": [
+{
+"key": "Content-Type",
+"value": "application/json"
+},
+{
+"key": "Authorization",
+"value": "Bearer {{m1Token}}"
+}
+],
+"url": {
+"raw": "{{baseUrl}}/api/auth/me",
+"host": [
+"{{baseUrl}}"
+],
+"path": [
+"api",
+"auth",
+"me"
+]
+}
+},
+"response": []
+},
+{
+"name": "07_cleanup_test_student",
+"event": [
+{
+"listen": "test",
+"script": {
+"type": "javascript",
+"exec": [
+"pm.test("Cleanup returns 200 or 403 (non-admin cannot self-delete)", () => {",
+"    pm.expect([200, 403]).to.include(pm.response.code);",
+"});"
+]
+}
+}
+],
+"request": {
+"method": "DELETE",
+"header": [
+{
+"key": "Content-Type",
+"value": "application/json"
+},
+{
+"key": "Authorization",
+"value": "Bearer {{m1Token}}"
+}
+],
+"url": {
+"raw": "{{baseUrl}}/api/users/{{m1UserId}}",
+"host": [
+"{{baseUrl}}"
+],
+"path": [
+"api",
+"users",
+"{{m1UserId}}"
+]
+}
+},
+"response": []
+}
+],
+"variable": []
+}
