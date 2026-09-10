@@ -33,46 +33,16 @@ exports.getTripById = async (req, res) => {
 
 exports.updateTrip = async (req, res) => {
   try {
-    const {
-      route,
-      tripDate,
-      departureTime,
-      availableSeats,
-      status
-    } = req.body;
-
-    const trip = await Trip.findByIdAndUpdate(
-      req.params.id,
-      {
-        route,
-        tripDate,
-        departureTime,
-        availableSeats,
-        status
-      },
-      {
-        new: true,
-        runValidators: true
-      }
-    );
-
+    const trip = await Trip.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true
+    });
     if (!trip) {
-      return res.status(404).json({
-        success: false,
-        message: "Trip not found"
-      });
+      return res.status(404).json({ success: false, message: "Trip not found" });
     }
-
-    res.status(200).json({
-      success: true,
-      message: "Trip updated successfully",
-      data: trip
-    });
+    res.status(200).json({ success: true, message: "Trip updated successfully", data: trip });
   } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: error.message
-    });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 

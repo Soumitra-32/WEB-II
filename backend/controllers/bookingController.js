@@ -98,21 +98,9 @@ exports.getBookingById = async (req, res) => {
 // ==========================================
 exports.updateBooking = async (req, res) => {
   try {
-    const {
-      bookingReference,
-      tripId,
-      student,
-      seatNumber
-    } = req.body;
-
     const booking = await Booking.findByIdAndUpdate(
       req.params.id,
-      {
-        bookingReference,
-        tripId,
-        student,
-        seatNumber
-      },
+      req.body,
       {
         new: true,
         runValidators: true
@@ -139,6 +127,7 @@ exports.updateBooking = async (req, res) => {
     });
   }
 };
+
 
 // ==========================================
 // DELETE BOOKING
