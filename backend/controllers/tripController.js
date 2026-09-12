@@ -33,10 +33,27 @@ exports.getTripById = async (req, res) => {
 
 exports.updateTrip = async (req, res) => {
   try {
-    const trip = await Trip.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true
-    });
+  const {
+  route,
+  tripDate,
+  departureTime,
+  availableSeats,
+  status
+} = req.body; 
+const trip = await Trip.findByIdAndUpdate(
+  req.params.id,
+  {
+    route,
+    tripDate,
+    departureTime,
+    availableSeats,
+    status
+  },
+  {
+    new: true,
+    runValidators: true
+  }
+);
     if (!trip) {
       return res.status(404).json({ success: false, message: "Trip not found" });
     }
