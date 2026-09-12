@@ -20,21 +20,25 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
       .map(origin => origin.trim())
   : [];
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"]
-  })
-);
+app.use((err, req, res, next) => {
+  if (err.message === 'Not allowed by CORS') {
+    return res.status(403).json({
+      success: false,
+      message: 'CORS policy: Origin not allowed'
+    });
+  }
+  next(err);
+});
 app.use(express.json());
-app.use(mongoSanitize());
+app.use((req, res, next) => {
+  if (req.body) {
+    req.body = mongoSanitize.sanitize(req.body, { replaceWith: '_' });
+  }
+  if (req.params) {
+    req.params = mongoSanitize.sanitize(req.params, { replaceWith: '_' });
+  }
+  next();
+});
 app.use("/api/auth", authRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/users", userRoutes);

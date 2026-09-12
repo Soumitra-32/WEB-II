@@ -101,7 +101,13 @@ exports.login = async (req, res) => {
         message: "universityEmail and password are required"
       });
     }
-
+// Add this type validation block:
+    if (typeof universityEmail !== 'string' || typeof password !== 'string') {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid input data types"
+      });
+    }
     const user = await User.findOne({ universityEmail }).select("+password");
 
     if (!user || !(await user.comparePassword(password))) {

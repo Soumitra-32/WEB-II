@@ -1,0 +1,159 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-1234567890ef",
+    "name": "Bus Booking Security Verification",
+    "description": "Collection to verify Authentication Rate Limiting, Security Headers (Helmet), NoSQL Injection Sanitization, and CORS Controls.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "allowedOrigin",
+      "value": "http://busbooking.me",
+      "type": "string"
+    },
+    {
+      "key": "disallowedOrigin",
+      "value": "http://unauthorized-domain.com",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Rate Limiting - Authentication (/login)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"universityEmail\": \"test@example.com\",\n  \"password\": \"wrongpassword\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        },
+        "description": "Run this request 6 times sequentially using the Collection Runner. Requests 1-5 will return 401 Unauthorized, and request 6 will return 429 Too Many Requests."
+      },
+      "response": []
+    },
+    {
+      "name": "2. Security Headers - Helmet Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            ""
+          ]
+        },
+        "description": "Inspect response headers for Helmet defaults like X-Frame-Options, X-Content-Type-Options, and Strict-Transport-Security."
+      },
+      "response": []
+    },
+    {
+      "name": "3. NoSQL Injection - Query Operator Payload",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"universityEmail\": { \"$gt\": \"\" },\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        },
+        "description": "Sends a NoSQL injection payload containing $gt. The custom mongoSanitize middleware strips the operator without causing a server exception."
+      },
+      "response": []
+    },
+    {
+      "name": "4a. CORS - Allowed Origin Check",
+      "request": {
+        "method": "OPTIONS",
+        "header": [
+          {
+            "key": "Origin",
+            "value": "{{allowedOrigin}}"
+          },
+          {
+            "key": "Access-Control-Request-Method",
+            "value": "GET"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/trips",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "trips"
+          ]
+        },
+        "description": "Preflight check from an authorized origin. Response headers should include Access-Control-Allow-Origin: http://busbooking.me."
+      },
+      "response": []
+    },
+    {
+      "name": "4b. CORS - Disallowed Origin Check",
+      "request": {
+        "method": "OPTIONS",
+        "header": [
+          {
+            "key": "Origin",
+            "value": "{{disallowedOrigin}}"
+          },
+          {
+            "key": "Access-Control-Request-Method",
+            "value": "GET"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/trips",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "trips"
+          ]
+        },
+        "description": "Preflight check from an unapproved origin. Response should block the request or omit Access-Control-Allow-Origin."
+      },
+      "response": []
+    }
+  ]
+}
