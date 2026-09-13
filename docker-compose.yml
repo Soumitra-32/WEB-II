@@ -5,9 +5,6 @@ services:
     container_name: webii-mongodb
     restart: unless-stopped
 
-    ports:
-      - "27017:27017"
-
     volumes:
       - mongodb_data:/data/db
 
@@ -23,8 +20,8 @@ services:
     container_name: webii-backend
     restart: unless-stopped
 
-    ports:
-      - "5000:5000"
+    expose:
+      - "5000"
 
     depends_on:
       - mongodb
@@ -48,8 +45,8 @@ services:
     container_name: webii-frontend
     restart: unless-stopped
 
-    ports:
-      - "80:3000"
+    expose:
+      - "3000"
 
     depends_on:
       - backend
@@ -57,6 +54,27 @@ services:
     environment:
       - HOST=0.0.0.0
       - DANGEROUSLY_DISABLE_HOST_CHECK=true
+
+    networks:
+      - web-network
+
+
+  nginx:
+    image: nginx:alpine
+    container_name: webii-nginx
+    restart: unless-stopped
+
+    ports:
+      - "80:80"
+      - "443:443"
+
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - /home/azureuser/busbooking_ssl_cert/ssl:/etc/nginx/ssl:ro
+
+    depends_on:
+      - frontend
+      - backend
 
     networks:
       - web-network
