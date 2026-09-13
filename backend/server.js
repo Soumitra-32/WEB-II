@@ -1,5 +1,4 @@
 require("dotenv").config();
-
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -11,6 +10,7 @@ const userRoutes = require("./routes/userRoutes");
 const tripRoutes = require("./routes/tripRoutes");
 const routeRoutes = require("./routes/routeRoutes");
 const authRoutes = require("./routes/authRoutes");
+const mongoSanitize = require("express-mongo-sanitize");
 
 // Custom Express 5 compatible MongoDB sanitizer
 const mongoSanitizeMiddleware = require("./middleware/mongoSanitize");
