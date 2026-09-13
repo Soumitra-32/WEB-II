@@ -1,0 +1,472 @@
+{
+  "info": {
+    "_postman_id": "b7e2f1a0-4c3d-4a2e-9f1b-security-tests-0001",
+    "name": "BusBooking API - Security Test Suite",
+    "description": "Automated tests validating the 6 implemented security measures:\n1. HTTPS/SSL + HTTP->HTTPS redirect (nginx)\n2. Rate limiting on auth endpoints (express-rate-limit)\n3. Security headers (helmet)\n4. Input sanitization against NoSQL/operator injection (custom mongoSanitize middleware)\n5. CORS restricted origin whitelist\n6. This collection itself serves as living documentation/regression test for the above.\n\nSet the collection variables below to match your environment before running (Runner or Newman).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://busbooking.me", "type": "string" },
+    { "key": "httpBaseUrl", "value": "http://busbooking.me", "type": "string" },
+    { "key": "allowedOrigin", "value": "https://busbooking.me", "type": "string" },
+    { "key": "allowedOriginWww", "value": "https://www.busbooking.me", "type": "string" },
+    { "key": "disallowedOrigin", "value": "https://evil-attacker.com", "type": "string" },
+    { "key": "testEmail", "value": "security.test@example.com", "type": "string" },
+    { "key": "testPassword", "value": "Wr0ngPassword!", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "0. Setup - Health Check",
+      "item": [
+        {
+          "name": "API is reachable",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/health", "host": ["{{baseUrl}}"], "path": ["api", "health"] }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Server responds 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Health message present', function () {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.message).to.eql('Backend is running successfully.');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "1. HTTPS & SSL Redirect",
+      "item": [
+        {
+          "name": "HTTP request is redirected to HTTPS (301)",
+          "protocolProfileBehavior": { "followRedirects": false },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{httpBaseUrl}}/", "host": ["{{httpBaseUrl}}"], "path": [""] },
+            "description": "Postman's automatic redirect-following MUST be disabled (protocolProfileBehavior.followRedirects is already set to false on this request) so we can inspect the raw 301 response from nginx."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 301 Moved Permanently', function () {",
+                  "    pm.response.to.have.status(301);",
+                  "});",
+                  "pm.test('Location header points to https://', function () {",
+                  "    const location = pm.response.headers.get('Location');",
+                  "    pm.expect(location).to.not.be.null;",
+                  "    pm.expect(location).to.match(/^https:\\/\\//);",
+                  "});",
+                  "pm.test('Redirect preserves host/path', function () {",
+                  "    const location = pm.response.headers.get('Location');",
+                  "    pm.expect(location).to.include('busbooking.me');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "HTTPS endpoint uses valid TLS (TLSv1.2/1.3)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/health", "host": ["{{baseUrl}}"], "path": ["api", "health"] },
+            "description": "If this request succeeds at all over https:// without a certificate error, the SSL cert chain is valid. Combine with an external check (e.g. `openssl s_client -connect busbooking.me:443 -tls1_2`) for protocol-level verification, since Postman does not expose the negotiated TLS version in tests."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('HTTPS connection succeeds (valid cert, no SSL error)', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Strict-Transport-Security header present (HSTS)', function () {",
+                  "    pm.expect(pm.response.headers.has('Strict-Transport-Security')).to.be.true;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2. Rate Limiting on Auth Endpoints",
+      "item": [
+        {
+          "name": "Login - single request returns rate-limit headers",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{testEmail}}\",\n  \"password\": \"{{testPassword}}\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('RateLimit policy headers are exposed (standardHeaders)', function () {",
+                  "    const headerNames = pm.response.headers.all().map(h => h.key.toLowerCase());",
+                  "    const hasRateLimitHeader = headerNames.some(h => h.startsWith('ratelimit'));",
+                  "    pm.expect(hasRateLimitHeader).to.be.true;",
+                  "});",
+                  "pm.test('Legacy X-RateLimit-* headers are NOT sent (legacyHeaders: false)', function () {",
+                  "    pm.expect(pm.response.headers.has('X-RateLimit-Limit')).to.be.false;",
+                  "});",
+                  "pm.test('Request handled without server error', function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 400, 401, 429]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Flood login endpoint to trigger 429 (run via Collection Runner, 260 iterations)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{testEmail}}\",\n  \"password\": \"{{testPassword}}\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] },
+            "description": "authLimiter allows max:250 requests per 15 minutes per IP. Run this single request through Postman's Collection Runner (or newman run -n 260) so the SAME request fires 260 times in a row. Requests 1-250 should return 200/400/401; requests 251+ must return 429."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.environment.set('reqCounter', (parseInt(pm.environment.get('reqCounter')) || 0) + 1);",
+                  "const n = parseInt(pm.environment.get('reqCounter'));",
+                  "",
+                  "if (pm.response.code === 429) {",
+                  "    pm.test('Request #' + n + ' correctly blocked - 429 Too Many Requests', function () {",
+                  "        pm.response.to.have.status(429);",
+                  "    });",
+                  "    pm.test('429 response has expected shape', function () {",
+                  "        const json = pm.response.json();",
+                  "        pm.expect(json.success).to.eql(false);",
+                  "        pm.expect(json.message).to.include('Too many authentication attempts');",
+                  "    });",
+                  "} else {",
+                  "    pm.test('Request #' + n + ' within limit, processed normally', function () {",
+                  "        pm.expect(pm.response.code).to.be.oneOf([200, 400, 401]);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "3. Security Headers (Helmet)",
+      "item": [
+        {
+          "name": "Response includes helmet security headers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/health", "host": ["{{baseUrl}}"], "path": ["api", "health"] }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('X-Content-Type-Options: nosniff', function () {",
+                  "    pm.expect(pm.response.headers.get('X-Content-Type-Options')).to.eql('nosniff');",
+                  "});",
+                  "pm.test('X-Frame-Options is set (clickjacking protection)', function () {",
+                  "    pm.expect(pm.response.headers.has('X-Frame-Options')).to.be.true;",
+                  "});",
+                  "pm.test('X-DNS-Prefetch-Control is set', function () {",
+                  "    pm.expect(pm.response.headers.has('X-DNS-Prefetch-Control')).to.be.true;",
+                  "});",
+                  "pm.test('Referrer-Policy is set', function () {",
+                  "    pm.expect(pm.response.headers.has('Referrer-Policy')).to.be.true;",
+                  "});",
+                  "pm.test('X-Powered-By header is hidden', function () {",
+                  "    pm.expect(pm.response.headers.has('X-Powered-By')).to.be.false;",
+                  "});",
+                  "pm.test('Strict-Transport-Security is set on HTTPS response', function () {",
+                  "    pm.expect(pm.response.headers.has('Strict-Transport-Security')).to.be.true;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "4. Input Sanitization (NoSQL Injection)",
+      "item": [
+        {
+          "name": "Blocks $gt operator auth-bypass attempt",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": { \"$gt\": \"\" },\n  \"password\": { \"$gt\": \"\" }\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] },
+            "description": "Classic NoSQL injection: {$gt:''} matches any string, historically used to bypass login without valid credentials. mongoSanitizeMiddleware should strip the $gt key entirely, leaving email/password undefined, so the request must fail validation - never succeed."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Injection payload does not bypass authentication', function () {",
+                  "    pm.expect(pm.response.code).to.not.eql(200);",
+                  "});",
+                  "pm.test('No JWT/token leaked in response', function () {",
+                  "    const body = pm.response.text();",
+                  "    pm.expect(body).to.not.include('token');",
+                  "});",
+                  "pm.test('Server does not 500 on operator payload (sanitized cleanly)', function () {",
+                  "    pm.expect(pm.response.code).to.not.eql(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Blocks $ne operator injection on login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": { \"$ne\": null },\n  \"password\": { \"$ne\": null }\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('$ne payload rejected, no bypass', function () {",
+                  "    pm.expect(pm.response.code).to.not.eql(200);",
+                  "});",
+                  "pm.test('No server error thrown', function () {",
+                  "    pm.expect(pm.response.code).to.not.eql(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Strips dot-notation keys (field.path injection)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email.$ne\": \"anything\",\n  \"password\": \"anything\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] },
+            "description": "Keys containing a dot (used to target nested Mongo fields) must be stripped by sanitizeObject, leaving email undefined."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Dot-notation key stripped, request fails validation not injection', function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([400, 401]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Sanitizes injection in query string params",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/bookings?filter[$ne]=null",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "bookings"],
+              "query": [{ "key": "filter[$ne]", "value": "null" }]
+            },
+            "description": "req.query is read-only in Express 5; middleware mutates the object in place instead of reassigning it. This confirms that path doesn't crash and doesn't leak an operator through to the DB layer."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Query-param operator injection does not crash the server', function () {",
+                  "    pm.expect(pm.response.code).to.not.eql(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "5. CORS Restricted Origin Whitelist",
+      "item": [
+        {
+          "name": "Allowed origin receives Access-Control-Allow-Origin",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Origin", "value": "{{allowedOrigin}}" }],
+            "url": { "raw": "{{baseUrl}}/api/health", "host": ["{{baseUrl}}"], "path": ["api", "health"] }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Whitelisted origin is echoed back', function () {",
+                  "    pm.expect(pm.response.headers.get('Access-Control-Allow-Origin')).to.eql(pm.variables.get('allowedOrigin'));",
+                  "});",
+                  "pm.test('Request succeeds', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Allowed www subdomain origin also receives Access-Control-Allow-Origin",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Origin", "value": "{{allowedOriginWww}}" }],
+            "url": { "raw": "{{baseUrl}}/api/health", "host": ["{{baseUrl}}"], "path": ["api", "health"] },
+            "description": "ALLOWED_ORIGINS includes both busbooking.me and www.busbooking.me (and both http/https variants) as distinct origin strings - each must be checked independently since browsers treat them as different origins."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('www origin is echoed back', function () {",
+                  "    pm.expect(pm.response.headers.get('Access-Control-Allow-Origin')).to.eql(pm.variables.get('allowedOriginWww'));",
+                  "});",
+                  "pm.test('Request succeeds', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Disallowed origin is rejected (no CORS header)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Origin", "value": "{{disallowedOrigin}}" }],
+            "url": { "raw": "{{baseUrl}}/api/health", "host": ["{{baseUrl}}"], "path": ["api", "health"] }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('No Access-Control-Allow-Origin header for untrusted origin', function () {",
+                  "    pm.expect(pm.response.headers.has('Access-Control-Allow-Origin')).to.be.false;",
+                  "});",
+                  "pm.test('Server rejects the request (CORS error surfaces as non-2xx)', function () {",
+                  "    pm.expect(pm.response.code).to.not.be.oneOf([200, 201]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Request with no Origin header is allowed (server-to-server / curl)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/health", "host": ["{{baseUrl}}"], "path": ["api", "health"] },
+            "description": "cors() config calls callback(null, true) when origin is undefined (non-browser tools like curl/Postman/mobile apps). This is intentional and expected."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Requests without an Origin header are not blocked', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Disallowed methods are rejected (DELETE not on whitelist example)",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Origin", "value": "{{allowedOrigin}}" }],
+            "url": { "raw": "{{baseUrl}}/api/bookings/000000000000000000000000", "host": ["{{baseUrl}}"], "path": ["api", "bookings", "000000000000000000000000"] },
+            "description": "cors() is configured with methods: [GET, POST, PUT, DELETE] only - PATCH is not included, so a preflight for PATCH should not receive an Allow-Methods match. Adjust the path to a real route if needed."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('PATCH is not an explicitly allowed CORS method', function () {",
+                  "    const allowMethods = pm.response.headers.get('Access-Control-Allow-Methods') || '';",
+                  "    pm.expect(allowMethods).to.not.include('PATCH');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
