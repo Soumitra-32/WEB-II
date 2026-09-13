@@ -13,3 +13,8 @@ coverage/
 npm-debug.log
 
 .DS_Store
+
+# ssl certificate
+ssl/
+*.pem
+*.key
