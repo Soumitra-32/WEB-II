@@ -62,7 +62,11 @@ app.get("/", (req, res) => {
     message: "Backend is running successfully."
   });
 });
-
+app.get("/api/health", (req, res) => {
+  res.json({
+    message: "Backend is running successfully."
+  });
+});
 // Server
 const PORT = process.env.PORT || 5000;
 
