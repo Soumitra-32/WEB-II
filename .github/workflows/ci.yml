@@ -12,13 +12,11 @@ on:
       - development
 
 jobs:
-
   build:
     name: Build Application
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -49,14 +47,12 @@ jobs:
         run: |
           docker compose build
 
-
   api-test:
     name: API Testing
     needs: build
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -122,10 +118,11 @@ jobs:
 
       - name: Run all Postman API Tests
         run: |
-          collections=(postman/lab-5/*.json)
+          shopt -s nullglob
+          collections=(postman/lab-{5,6}/*.json)
 
-          if [ ! -e "${collections[0]}" ]; then
-            echo "No Postman collections found in postman/lab-5."
+          if [ ${#collections[@]} -eq 0 ]; then
+            echo "No Postman collections found in postman/lab-5 or postman/lab-6."
             exit 0
           fi
 
