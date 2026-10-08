@@ -35,4 +35,14 @@ const routeSchema = new mongoose.Schema(
     }
 );
 
+// Unique constraint - no two identical routes
+routeSchema.index(
+  { origin: 1, destination: 1, departureTime: 1 },
+  { unique: true }
+);
+
+// Indexes for frequently queried fields
+routeSchema.index({ origin: 1 });
+routeSchema.index({ destination: 1 });
+
 module.exports = mongoose.model("Route", routeSchema);

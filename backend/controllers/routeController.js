@@ -3,6 +3,53 @@ const Route = require("../models/Route");
 exports.createRoute = async (req, res) => {
   try {
     const { origin, destination, departureTime, days, totalSeats } = req.body;
+
+    // Input validation
+    if (!origin || typeof origin !== "string" || origin.length > 100) {
+      return res.status(400).json({
+        success: false,
+        message: "origin is required and must be a string of max 100 characters"
+      });
+    }
+
+    if (!destination || typeof destination !== "string" || destination.length > 100) {
+      return res.status(400).json({
+        success: false,
+        message: "destination is required and must be a string of max 100 characters"
+      });
+    }
+
+    if (!departureTime || typeof departureTime !== "string") {
+      return res.status(400).json({
+        success: false,
+        message: "departureTime is required and must be a string"
+      });
+    }
+
+    if (!days || !Array.isArray(days) || days.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "days is required and must be a non-empty array"
+      });
+    }
+
+    // Validate day names
+    const validDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const invalidDays = days.filter((day) => !validDays.includes(day));
+    if (invalidDays.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: `Invalid day(s) provided: ${invalidDays.join(", ")}`
+      });
+    }
+
+    if (totalSeats === undefined || typeof totalSeats !== "number" || totalSeats < 1) {
+      return res.status(400).json({
+        success: false,
+        message: "totalSeats is required and must be a positive number"
+      });
+    }
+
     const route = await Route.create({ origin, destination, departureTime, days, totalSeats });
     res.status(201).json({ success: true, message: "Route created successfully", data: route });
   } catch (error) {

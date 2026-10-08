@@ -6,7 +6,8 @@ const bookingSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      immutable: true
+      immutable: true,
+      trim: true
     },
 
     tripId: {
@@ -58,7 +59,34 @@ const bookingSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-    optimisticConcurrency: true
+    versionKey: "__v"
+  }
+);
+
+// Indexes for foreign keys
+bookingSchema.index({ tripId: 1, student: 1 });
+bookingSchema.index({ tripId: 1, seatNumber: 1 });
+bookingSchema.index({ status: 1, tripId: 1 });
+
+// Prevent one student from having two confirmed bookings for the same trip
+bookingSchema.index(
+  { tripId: 1, student: 1 },
+  {
+    unique: true,
+    partialFilterExpression: {
+      status: "confirmed"
+    }
+  }
+);
+
+// Prevent two students from booking the same seat
+bookingSchema.index(
+  { tripId: 1, seatNumber: 1 },
+  {
+    unique: true,
+    partialFilterExpression: {
+      status: "confirmed"
+    }
   }
 );
 

@@ -29,4 +29,8 @@ const tripSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Index for foreign key queries
+tripSchema.index({ route: 1 });
+tripSchema.index({ tripDate: 1, status: 1 });
+
 module.exports = mongoose.model("Trip", tripSchema);
