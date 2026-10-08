@@ -6,9 +6,9 @@ const { register, login, getMe } = require("../controllers/authController");
 
 const { protect } = require("../middleware/authMiddleware");
 
-const authLimiter = require("../middleware/rateLimitMiddleware");
+const { authLimiter, generalLimiter } = require("../middleware/rateLimitMiddleware");
 
-router.post("/register", register);
+router.post("/register", generalLimiter, register);
 
 router.post("/login", authLimiter, login);
 

@@ -4,9 +4,9 @@ const { createUser, getAllUsers, getUserById, updateUser, deleteUser } = require
 const { protect, authorize } = require("../middleware/authMiddleware");
 
 router.post("/", protect, authorize("admin"), createUser);
-router.get("/", protect, getAllUsers);
-router.get("/:id", protect, getUserById);
-router.put("/:id", protect, updateUser);
+router.get("/", protect, authorize("admin"), getAllUsers);
+router.get("/:id", protect, authorize("admin"), getUserById);
+router.put("/:id", protect, authorize("admin"), updateUser);
 router.delete("/:id", protect, authorize("admin"), deleteUser);
 
 module.exports = router;

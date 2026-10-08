@@ -3,6 +3,11 @@ function sanitizeObject(obj) {
     return;
   }
 
+  if (Array.isArray(obj)) {
+    obj.forEach((item) => sanitizeObject(item));
+    return;
+  }
+
   for (const key of Object.keys(obj)) {
     // Remove MongoDB operators and dot notation
     if (key.startsWith("$") || key.includes(".")) {
