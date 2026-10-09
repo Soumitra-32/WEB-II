@@ -1,63 +1,37 @@
-import logo from './logo.svg';
+import { useMemo, useState } from 'react';
 import './App.css';
 
-import { Routes, Route, Link } from 'react-router-dom';
-import About from './About';
+const seed = {
+  buses: [{ id: 'b1', name: 'Campus Express', registrationNumber: 'JU-01-2026', seatCount: 40, layout: '2 + 2', active: true }, { id: 'b2', name: 'Green Shuttle', registrationNumber: 'JU-02-2026', seatCount: 32, layout: '2 + 1', active: true }, { id: 'b3', name: 'Evening Link', registrationNumber: 'JU-03-2025', seatCount: 28, layout: '2 + 1', active: false }],
+  routes: [{ id: 'r1', source: 'Savar Campus', destination: 'Farmgate', via: 'Mirpur 10', duration: 72 }, { id: 'r2', source: 'Savar Campus', destination: 'Uttara', via: 'Airport Road', duration: 65 }],
+  trips: [{ id: 't1', bus: 'b1', route: 'r1', departure: '2026-10-10T07:30', arrival: '2026-10-10T08:42', fare: 45, status: 'scheduled', seats: 40, available: 34 }, { id: 't2', bus: 'b2', route: 'r2', departure: '2026-10-10T16:15', arrival: '2026-10-10T17:20', fare: 40, status: 'boarding', seats: 32, available: 11 }]
+};
+const date = (v) => new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }).format(new Date(v));
+const Field = ({ label, ...props }) => <label className="field"><span>{label}</span><input {...props} /></label>;
 
-function Home() {
-  return (
-    <div className="App">
-      <header className="App-header">
-
-        <div
-          style={{
-            position: "absolute",
-            top: "20px",
-            left: "20px"
-          }}
-        >
-          <Link
-            to="/about"
-            style={{
-              color: "white",
-              textDecoration: "none",
-              fontSize: "20px",
-              border: "1px solid white",
-              padding: "8px 16px",
-              borderRadius: "5px"
-            }}
-          >
-            About
-          </Link>
-        </div>
-
-        <img src={logo} className="App-logo" alt="logo" />
-
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-
-      </header>
-    </div>
-  );
+export default function App() {
+  const [data, setData] = useState(seed), [page, setPage] = useState('overview'), [modal, setModal] = useState(null), [selected, setSelected] = useState(seed.trips[0]), [toast, setToast] = useState('Demo mode is active — changes are saved in this preview session.');
+  const [bus, setBus] = useState({ name: '', registrationNumber: '', seatCount: 40, layout: '2 + 2' });
+  const [route, setRoute] = useState({ source: '', destination: '', via: '', duration: 60 });
+  const [trip, setTrip] = useState({ bus: '', route: '', departure: '', arrival: '', fare: 0, status: 'scheduled' });
+  const active = data.buses.filter((b) => b.active).length, openSeats = data.trips.reduce((n, t) => n + t.available, 0);
+  const currentBus = data.buses.find((b) => b.id === selected?.bus), currentRoute = data.routes.find((r) => r.id === selected?.route);
+  const seats = useMemo(() => Array.from({ length: selected?.seats || 40 }, (_, i) => ({ n: i + 1, booked: i < ((selected?.seats || 40) - (selected?.available || 0)) })), [selected]);
+  function addBus(e) { e.preventDefault(); const item = { ...bus, id: `b${Date.now()}`, seatCount: +bus.seatCount, active: true }; setData({ ...data, buses: [item, ...data.buses] }); setBus({ name: '', registrationNumber: '', seatCount: 40, layout: '2 + 2' }); close('Bus added. You can now schedule a trip for it.'); setPage('buses'); }
+  function addRoute(e) { e.preventDefault(); const item = { ...route, id: `r${Date.now()}`, duration: +route.duration }; setData({ ...data, routes: [item, ...data.routes] }); setRoute({ source: '', destination: '', via: '', duration: 60 }); close('Route created successfully.'); setPage('routes'); }
+  function addTrip(e) { e.preventDefault(); const b = data.buses.find((x) => x.id === trip.bus); const item = { ...trip, id: `t${Date.now()}`, fare: +trip.fare, seats: b.seatCount, available: b.seatCount }; setData({ ...data, trips: [item, ...data.trips] }); setSelected(item); setTrip({ bus: '', route: '', departure: '', arrival: '', fare: 0, status: 'scheduled' }); close('Trip scheduled with automatically numbered seats.'); setPage('trips'); }
+  function close(message = '') { setModal(null); setToast(message); }
+  function deactivate(id) { setData({ ...data, buses: data.buses.map((b) => b.id === id ? { ...b, active: false } : b) }); setToast('Bus deactivated. Existing trip history remains available.'); }
+  function toggleSeat(n) { const booked = (selected.seats - selected.available) >= n; const next = { ...selected, available: booked ? selected.available + 1 : Math.max(0, selected.available - 1) }; setSelected(next); setData({ ...data, trips: data.trips.map((t) => t.id === next.id ? next : t) }); }
+  const go = (p) => { setPage(p); setToast(''); };
+  return <div className="shell"><aside className="sidebar"><div className="brand"><b>T</b><div><strong>TransitOps</strong><small>ADMIN CONSOLE</small></div></div><label className="workspace">WORKSPACE</label><nav>{[['overview','▦','Overview'],['buses','▣','Buses'],['routes','↗','Routes'],['trips','◷','Trips'],['seats','⊞','Seat engine']].map(([key, icon, text]) => <button className={page === key ? 'nav active' : 'nav'} onClick={() => go(key)} key={key}><i>{icon}</i>{text}{key === 'trips' && <em>{data.trips.length}</em>}</button>)}</nav><div className="sidebar-foot"><p>● All systems operational</p><div className="profile"><b>AR</b><span><strong>Admin Rahman</strong><small>Fleet manager</small></span>•••</div></div></aside><main><header><div><label>SATURDAY, OCTOBER 10, 2026</label><h1>{page === 'overview' ? 'Good morning, Admin' : page === 'seats' ? 'Seat engine' : `${page[0].toUpperCase()}${page.slice(1)} management`}</h1></div><div className="header-icons">⌕　♢　<span>AR</span></div></header>{toast && <div className="toast">✦ {toast}<button onClick={() => setToast('')}>×</button></div>}{page === 'overview' && <Overview data={data} active={active} openSeats={openSeats} go={go} open={setModal} />}{page === 'buses' && <Buses data={data} open={setModal} deactivate={deactivate} />}{page === 'routes' && <Routes data={data} open={setModal} />}{page === 'trips' && <Trips data={data} select={(t) => { setSelected(t); go('seats'); }} open={setModal} />}{page === 'seats' && <Seats selected={selected} currentBus={currentBus} currentRoute={currentRoute} seats={seats} toggle={toggleSeat} trips={data.trips} setSelected={setSelected} />}{modal === 'bus' && <Modal title="Add a bus" close={close}><form onSubmit={addBus}><Field label="Bus name" value={bus.name} placeholder="Campus Express" required onChange={(e) => setBus({ ...bus, name: e.target.value })} /><div className="two"><Field label="Registration" value={bus.registrationNumber} placeholder="JU-04-2026" required onChange={(e) => setBus({ ...bus, registrationNumber: e.target.value })} /><Field label="Seat count" type="number" value={bus.seatCount} onChange={(e) => setBus({ ...bus, seatCount: e.target.value })} /></div><div className="two"><Field label="Seat layout" value={bus.layout} onChange={(e) => setBus({ ...bus, layout: e.target.value })} /><Field label="Operator" value="University Transport" readOnly /></div><Actions close={close} /></form></Modal>}{modal === 'route' && <Modal title="Create a route" close={close}><form onSubmit={addRoute}><div className="two"><Field label="Source" value={route.source} placeholder="Savar Campus" required onChange={(e) => setRoute({ ...route, source: e.target.value })} /><Field label="Destination" value={route.destination} placeholder="Farmgate" required onChange={(e) => setRoute({ ...route, destination: e.target.value })} /></div><Field label="Via (optional)" value={route.via} placeholder="Mirpur 10" onChange={(e) => setRoute({ ...route, via: e.target.value })} /><Field label="Estimated duration (minutes)" type="number" value={route.duration} onChange={(e) => setRoute({ ...route, duration: e.target.value })} /><Actions close={close} /></form></Modal>}{modal === 'trip' && <Modal title="Schedule a trip" close={close}><form onSubmit={addTrip}><div className="two"><label className="field"><span>Bus</span><select required value={trip.bus} onChange={(e) => setTrip({ ...trip, bus: e.target.value })}><option value="">Select bus…</option>{data.buses.filter((b) => b.active).map((b) => <option key={b.id} value={b.id}>{b.name} · {b.seatCount} seats</option>)}</select></label><label className="field"><span>Route</span><select required value={trip.route} onChange={(e) => setTrip({ ...trip, route: e.target.value })}><option value="">Select route…</option>{data.routes.map((r) => <option key={r.id} value={r.id}>{r.source} → {r.destination}</option>)}</select></label></div><div className="two"><Field label="Departure" type="datetime-local" required value={trip.departure} onChange={(e) => setTrip({ ...trip, departure: e.target.value })} /><Field label="Arrival" type="datetime-local" required value={trip.arrival} onChange={(e) => setTrip({ ...trip, arrival: e.target.value })} /></div><div className="two"><Field label="Fare (৳)" type="number" value={trip.fare} onChange={(e) => setTrip({ ...trip, fare: e.target.value })} /><label className="field"><span>Status</span><select value={trip.status} onChange={(e) => setTrip({ ...trip, status: e.target.value })}>{['scheduled','boarding','completed','cancelled'].map((s) => <option key={s}>{s}</option>)}</select></label></div><Actions close={close} /></form></Modal>}</main></div>;
 }
-
-function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/about" element={<About />} />
-    </Routes>
-  );
-}
-
-export default App;
+function Overview({ data, active, openSeats, go, open }) { return <><section className="hero"><div><small className="tag">WEEK 1 · FLEET FOUNDATION</small><h2>Move people<br /><i>with confidence.</i></h2><p>Build the operational backbone of your university transport network — one bus, route, and trip at a time.</p><button className="primary" onClick={() => open('bus')}>＋ Add a bus</button><button className="secondary" onClick={() => open('trip')}>Schedule trip　→</button></div><div className="hero-art"><span className="sun" /><span className="hero-bus">▰</span><small>07:30 departure</small><small>40 seats configured</small></div></section><div className="section-title"><div><label>NETWORK SNAPSHOT</label><h2>Today at a glance</h2></div><button onClick={() => go('trips')}>View schedule ↗</button></div><div className="stats">{[['▰','Active buses',active,'+2 this month','blue'],['↗','Live routes',data.routes.length,'All operating','purple'],['◷',"Today's trips",data.trips.length,'Next at 07:30','orange'],['⊞','Seats available',openSeats,'Across today’s trips','green']].map(([icon, label, value, sub, color]) => <div className="stat" key={label}><b className={color}>{icon}</b><span>{label}<strong>{value}</strong><small>{sub}</small></span></div>)}</div><div className="columns"><div className="panel"><div className="panel-title"><div><label>UP NEXT</label><h3>Departure board</h3></div><button onClick={() => go('trips')}>See all →</button></div><TripTable data={data} trips={data.trips} select={(t) => { go('seats'); }} /></div><div className="panel"><div className="panel-title"><div><label>QUICK ACTIONS</label><h3>Keep things moving</h3></div></div><button className="quick" onClick={() => open('route')}><b>↗</b><span><strong>Create a route</strong><small>Connect two destinations</small></span>→</button><button className="quick" onClick={() => go('seats')}><b>⊞</b><span><strong>Configure seats</strong><small>Number and manage availability</small></span>→</button></div></div></> }
+function Buses({ data, open, deactivate }) { return <PageHead title="Bus fleet" text="Add, edit, view, and deactivate the buses assigned to your network." action="Add bus" click={() => open('bus')}><div className="cards">{data.buses.map((b) => <article className={b.active ? 'card' : 'card muted'} key={b.id}><div className="card-top"><b>▰</b><span className={b.active ? 'pill green' : 'pill gray'}>{b.active ? 'Active' : 'Inactive'}</span></div><h3>{b.name}</h3><p>{b.registrationNumber} · University Transport</p><div className="metrics"><span>SEATS<strong>{b.seatCount}</strong></span><span>LAYOUT<strong>{b.layout}</strong></span></div><footer><button>View details</button>{b.active && <button className="danger" onClick={() => deactivate(b.id)}>Deactivate</button>}</footer></article>)}</div></PageHead> }
+function Routes({ data, open }) { return <PageHead title="Route library" text="Keep source, destination, intermediate stops, and travel duration consistent." action="Add route" click={() => open('route')}><div className="route-list">{data.routes.map((r) => <div className="route" key={r.id}><b>●</b><span><strong>{r.source}</strong><small>{r.via ? `via ${r.via}` : 'Direct service'}</small></span><i>→</i><span><strong>{r.destination}</strong><small>{r.duration} min estimated</small></span><span className="pill green">Active</span>•••</div>)}</div></PageHead> }
+function Trips({ data, select, open }) { return <PageHead title="Trip schedule" text="Schedule the bus, route, departure, arrival, fare, and operating status." action="Schedule trip" click={() => open('trip')}><TripTable data={data} trips={data.trips} select={select} /></PageHead> }
+function PageHead({ title, text, action, click, children }) { return <><div className="page-head"><div><label>OPERATIONS</label><h2>{title}</h2><p>{text}</p></div>{action && <button className="primary" onClick={click}>＋ {action}</button>}</div>{children}</> }
+function TripTable({ data, trips, select }) { return <div className="table"><div className="thead"><span>TRIP</span><span>DEPARTURE</span><span>LOAD</span><span>STATUS</span></div>{trips.map((t) => { const b = data.buses.find((x) => x.id === t.bus), r = data.routes.find((x) => x.id === t.route); return <button className="tr" key={t.id} onClick={() => select?.(t)}><span><strong>{r?.source} → {r?.destination}</strong><small>{b?.name} · ৳{t.fare}</small></span><span><strong>{date(t.departure)}</strong><small>Arrival {date(t.arrival)}</small></span><span><strong>{t.available}/{t.seats}</strong><small>available</small></span><b className={`pill ${t.status === 'boarding' ? 'orange' : 'green'}`}>{t.status}</b></button> })}</div> }
+function Seats({ selected, currentBus, currentRoute, seats, toggle, trips, setSelected }) { return <><PageHead title="Seat engine" text="Configure numbering and update live availability for every scheduled trip." action="" click={() => {}}><select className="trip-select" value={selected.id} onChange={(e) => setSelected(trips.find((t) => t.id === e.target.value))}>{trips.map((t) => <option key={t.id} value={t.id}>{date(t.departure)} · {t.available}/{t.seats} available</option>)}</select></PageHead><div className="seat-layout"><div className="seat-panel"><div className="seat-heading"><div><small className="tag">SELECTED TRIP</small><h3>{currentRoute?.source} <i>→</i> {currentRoute?.destination}</h3><p>{currentBus?.name} · {date(selected.departure)} · ৳{selected.fare}</p></div><strong>{selected.available}<small>available of {selected.seats}</small></strong></div><div className="driver">FRONT / DRIVER</div><div className="seat-grid">{seats.map((s) => <button className={s.booked ? 'seat booked' : 'seat'} onClick={() => toggle(s.n)} key={s.n}>{s.n}</button>)}</div><div className="legend">● Available　<span>● Booked</span>　◌ Blocked</div></div><aside className="side-note"><small className="tag">ENGINE NOTES</small><h3>Simple states.<br />Clear decisions.</h3><p>Every trip gets its own seat array when scheduled from the selected bus configuration.</p><hr /><small>Click any seat to toggle its availability in this preview.</small></aside></div></> }
+function Modal({ title, close, children }) { return <div className="backdrop" onMouseDown={() => close()}><div className="modal" onMouseDown={(e) => e.stopPropagation()}><header><div><label>ADMIN ACTION</label><h2>{title}</h2></div><button onClick={() => close()}>×</button></header>{children}</div></div> }
+function Actions({ close }) { return <div className="actions"><button type="button" onClick={() => close()}>Cancel</button><button className="primary">Save changes</button></div> }

@@ -1,255 +1,77 @@
-# WEB-II
+# Student Bus Booking System — Week 1
 
-A full-stack web application developed as part of the **Web Engineering-II** course at the **Department of Computer Science and Engineering, Jahangirnagar University**.
+A React + Express + MongoDB university bus booking system with the **Transportation Management Module** implemented for the five-week lab evaluation.
 
-The project demonstrates modern web application development and deployment using **React, Express.js, MongoDB, Docker, GitHub Actions, and Microsoft Azure**.
+## Week 1 deliverable
 
----
+The admin workflow is now covered end-to-end:
 
-## Project Overview
+1. **Admin login** — existing JWT authentication and admin authorization middleware.
+2. **Bus management** — add, list, view, edit, and deactivate buses; store registration, operator, seat count, and layout.
+3. **Route management** — create and list source → destination routes with optional via stop and duration.
+4. **Trip scheduling** — select a bus and route, set departure/arrival, fare, and status.
+5. **Seat engine** — auto-number seats from the selected bus and maintain available / held / booked / blocked per-trip state.
 
-The project is a **University Bus Seat Booking System** designed to provide a structured platform for managing university bus-related information and seat bookings.
+## Important files
 
-The application follows a full-stack architecture with a React frontend, Express.js backend, MongoDB database, and Docker-based deployment.
+- `backend/models/Bus.js` — bus lifecycle and capacity model.
+- `backend/models/Route.js` — source/destination route model.
+- `backend/models/Trip.js` — schedule, fare, status, and seat-array model.
+- `backend/controllers/busController.js` + `backend/routes/busRoutes.js` — admin bus APIs.
+- `backend/controllers/routeController.js` — route APIs updated for source/destination.
+- `backend/controllers/tripController.js` — scheduling and seat configuration APIs.
+- `frontend/src/App.js` — functional admin preview UI and demo flow.
+- `frontend/src/App.css` — responsive TransitOps admin console styling.
 
-The project also implements a CI/CD workflow using GitHub Actions and a self-hosted runner deployed on a Microsoft Azure Virtual Machine.
+## Run the preview
 
----
+The frontend includes a self-contained demo mode so the Week 1 flow can be evaluated without MongoDB:
 
-## Technology Stack
-
-| Category          | Technology                |
-| ----------------- | ------------------------- |
-| Frontend          | React.js                  |
-| Backend           | Express.js                |
-| Runtime           | Node.js                   |
-| Language          | JavaScript                |
-| Database          | MongoDB                   |
-| Database Driver   | Mongoose                  |
-| API               | REST API                  |
-| API Testing       | Postman                   |
-| Version Control   | Git                       |
-| Repository        | GitHub                    |
-| Containerization  | Docker                    |
-| Orchestration     | Docker Compose            |
-| CI/CD             | GitHub Actions            |
-| Deployment Runner | GitHub Self-Hosted Runner |
-| Cloud Platform    | Microsoft Azure           |
-| Server OS         | Ubuntu Server             |
-| Development OS    | Windows 11                |
-| Code Editor       | Visual Studio Code        |
-
----
-
-## Architecture
-
-```text
-                    Developer Laptop
-                       Windows 11
-                           │
-                       Git Push
-                           │
-                           ▼
-                  ┌─────────────────┐
-                  │     GitHub      │
-                  │   WEB-II Repo   │
-                  └────────┬────────┘
-                           │
-                    GitHub Actions
-                           │
-                           ▼
-                ┌─────────────────────┐
-                │ Self-Hosted Runner  │
-                │      Azure VM       │
-                └──────────┬──────────┘
-                           │
-                    Docker Compose
-                           │
-              ┌────────────┼────────────┐
-              │            │            │
-              ▼            ▼            ▼
-           React       Express.js    MongoDB
-         Frontend       Backend      Database
-          :3000          :5000
+```bash
+cd frontend
+npm install
+npm start
 ```
 
----
+Open `http://localhost:3000`. Use the left navigation or the dashboard buttons to run:
 
-## Project Structure
+> Add bus → Create route → Schedule trip → Seat engine
 
-```text
-WEB-II/
-│
-├── backend/
-│   ├── config/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── server.js
-│   ├── package.json
-│   ├── Dockerfile
-│   └── .dockerignore
-│
-├── frontend/
-│   ├── src/
-│   ├── public/
-│   ├── package.json
-│   ├── Dockerfile
-│   └── .dockerignore
-│
-├── .github/
-│   └── workflows/
-│       └── deploy.yml
-│
-├── docker-compose.yml
-├── .gitignore
-└── README.md
+The preview starts with sample fleet data and saves changes in the current browser session.
+
+## Run the full stack
+
+1. Copy `backend/.env.example` to `backend/.env` and set `JWT_SECRET`.
+2. Start MongoDB and the API:
+
+```bash
+cd backend
+npm install
+npm start
 ```
 
----
+3. Start the React frontend in another terminal:
 
-## Backend Architecture
-
-The Express.js backend follows the **MVC architecture** to maintain a clean separation of responsibilities.
-
-### Model
-
-Defines the MongoDB data structures using Mongoose and handles database-related operations.
-
-### Controller
-
-Contains the application logic for processing requests and generating responses.
-
-### Routes
-
-Defines the REST API endpoints and connects them with the appropriate controllers.
-
-### Configuration
-
-Contains application and database configuration required by the backend.
-
-This structure makes the backend easier to maintain, test, and extend.
-
----
-
-## Database
-
-The application uses **MongoDB** as its database.
-
-MongoDB is integrated with the Express.js backend through **Mongoose**.
-
-The database is containerized as part of the Docker Compose environment, allowing the frontend, backend, and database to run as separate services.
-
----
-
-## Core Features
-
-* React-based frontend
-* Express.js REST API
-* MongoDB database
-* Mongoose integration
-* MVC backend architecture
-* Models and controllers
-* REST API routes
-* CRUD operations
-* Dockerized frontend
-* Dockerized backend
-* Dockerized MongoDB
-* Docker Compose orchestration
-* GitHub version control
-* GitHub Actions CI/CD
-* GitHub Self-Hosted Runner
-* Microsoft Azure VM deployment
-* Postman API testing
-
----
-
-## CI/CD and Deployment
-
-The project uses **GitHub Actions** with a **self-hosted runner** installed on the Azure Virtual Machine.
-
-The deployment workflow is:
-
-```text
-Developer
-    │
-    │ git push
-    ▼
-GitHub Repository
-    │
-    │ GitHub Actions
-    ▼
-Azure VM Self-Hosted Runner
-    │
-    │ Pull latest source
-    ▼
-Docker Compose
-    │
-    ├── React Frontend
-    ├── Express Backend
-    └── MongoDB
+```bash
+cd frontend
+npm install
+npm start
 ```
 
-The development and deployment workflow follows two environments:
+The API listens on port `5000`. New endpoints:
 
-**Development Environment**
+- `GET /api/buses`
+- `POST /api/buses` (admin)
+- `PUT /api/buses/:id` (admin)
+- `PATCH /api/buses/:id/deactivate` (admin)
+- `GET/POST/PUT /api/routes`
+- `GET/POST/PUT /api/trips`
+- `PATCH /api/trips/:id/seats` (admin)
 
-Windows 11 laptop where project files are developed and updated.
+## Lab demo verification
 
-**Deployment Environment**
+Use an admin JWT in the `Authorization: Bearer <token>` header for protected write operations. For the UI demo, the preview starts in admin mode and provides sample records so the evaluator can verify the workflow immediately.
 
-Ubuntu Server running on a Microsoft Azure Virtual Machine where the application is deployed using Docker Compose.
+## Notes for GitHub
 
----
-
-## Deployment Services
-
-| Service  | Technology | Port  |
-| -------- | ---------- | ----- |
-| Frontend | React.js   | 3000  |
-| Backend  | Express.js | 5000  |
-| Database | MongoDB    | 27017 |
-
-
----
-
-## Authors
-
-### Soumitra Saha
-
-**Project Manager**
-
-GitHub: https://github.com/Soumitra-32
-
-### Sukonya Dutta
-
-**Frontend Engineer**
-
-GitHub: https://github.com/Dutta-Pushpa
-
-### Sadikur Rahman Khan
-
-**Backend Engineer**
-
-GitHub: https://github.com/Sadik-khan077
-
-### Wasik Ahmed
-
-**Software Quality Assurance (SQA) Engineer**
-
-GitHub: https://github.com/WasikAhmed00
-
----
-
-## Academic Information
-
-**Department of Computer Science and Engineering**
-**Jahangirnagar University**
-
-**Course:** Web-II
-
----
-
-## License
-
-This project is developed for academic and educational purposes.
+This archive is the modified **WEB-II** project. The currently selected GitHub repository in the task is `WasikAhmed00/flowfreeze`, which is an unrelated Python fraud-analysis repository; it was not overwritten. Push this `WEB-II-main` folder to the intended student bus-booking repository, or create a new repository for this project before pushing.

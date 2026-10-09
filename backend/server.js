@@ -10,6 +10,7 @@ const bookingRoutes = require("./routes/bookingRoutes");
 const userRoutes = require("./routes/userRoutes");
 const tripRoutes = require("./routes/tripRoutes");
 const routeRoutes = require("./routes/routeRoutes");
+const busRoutes = require("./routes/busRoutes");
 const authRoutes = require("./routes/authRoutes");
 
 // Custom Middleware
@@ -70,6 +71,7 @@ app.use("/api/bookings", bookingRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/trips", tripRoutes);
 app.use("/api/routes", routeRoutes);
+app.use("/api/buses", busRoutes);
 
 // Health Check Endpoints
 const healthCheck = (req, res) => {
