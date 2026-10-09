@@ -4,7 +4,8 @@
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
-    { "key": "baseUrl", "value": "http://20.2.232.254:5000" },
+    { "key": "baseUrl", "value": "http://localhost:5000" },
+    { "key": "baseUrlOriginal", "value": "http://20.2.232.254:5000" },
     { "key": "routeId", "value": "650f1a2b3c4d5e6f7a8b9c0d" },
     { "key": "tripId", "value": "" }
   ],

@@ -94,5 +94,8 @@
       }
     }
   ],
-  "variable": [{ "key": "baseUrl", "value": "https://busbooking.me" }]
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000" },
+    { "key": "baseUrlOriginal", "value": "https://busbooking.me" }
+  ]
 }

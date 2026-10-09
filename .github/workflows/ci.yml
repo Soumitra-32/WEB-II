@@ -49,6 +49,10 @@ jobs:
 
   api-test:
     name: API Testing
+    # TEMPORARILY DISABLED - this job runs newman against https://busbooking.me,
+    # which is unreachable while the Azure server subscription is expired (CI would fail).
+    # Nothing below was changed - delete this single 'if: false' line to re-enable.
+    if: false
     needs: build
     runs-on: ubuntu-latest
 

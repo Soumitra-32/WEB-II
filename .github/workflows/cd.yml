@@ -1,10 +1,19 @@
 name: CD - Deploy to Azure
 
+# ============================================================
+# TEMPORARILY DISABLED - Azure server subscription is expired, so the
+# self-hosted runner (on the Azure VM) is offline and these jobs would
+# queue/wait forever. The original trigger is kept commented below -
+# uncomment it (and remove the workflow_dispatch-only 'on' block) when
+# the server is back. Manual runs remain available via workflow_dispatch.
+# ============================================================
+# on:
+#   push:
+#     branches:
+#       - main
+#       - production
 on:
-  push:
-    branches:
-      - main
-      - production
+  workflow_dispatch:
 
 jobs:
   deploy:

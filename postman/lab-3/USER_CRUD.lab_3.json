@@ -550,6 +550,10 @@
   "variable": [
     {
       "key": "baseUrl",
+      "value": "http://localhost:5000"
+    },
+    {
+      "key": "baseUrlOriginal",
       "value": "http://20.2.232.254:5000"
     },
     {
